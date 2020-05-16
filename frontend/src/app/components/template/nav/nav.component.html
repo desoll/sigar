@@ -7,13 +7,28 @@
                 </i>
                 Inicio
             </a>
-            <a mat-list-item routerLink="/patentes">
+            <a mat-list-item [matMenuTriggerFor]="menu" rigth>
                 <i class="material-icons">
                     people_alt
                 </i>
                 Def.users
+            <mat-menu class="nav-list" #menu="matMenu">
+                <a mat-menu-item routerLink="/patente/nova">
+                Novo
+                <i class="material-icons">
+                    add_circle_outline
+                </i>
+                </a>
+                <a mat-menu-item routerLink="/patente">
+                    Listar
+                    <i class="material-icons">
+                        list_alt
+                    </i>
+                </a>
+              </mat-menu>
             </a>
         </mat-nav-list>
+        
     </mat-sidenav>
     <mat-sidenav-content class="content">
         <router-outlet></router-outlet>
