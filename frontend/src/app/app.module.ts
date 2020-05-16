@@ -13,6 +13,10 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from "@angular/material/button";
 import { MatMenuModule } from "@angular/material/menu";
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
+//
+import{ HttpClientModule } from '@angular/common/http';
 
 //Componentes
 import { HeaderComponent } from './components/template/header/header.component';
@@ -41,8 +45,9 @@ import { NovaPatenteComponent } from './components/patente/nova-patente/nova-pat
     MatListModule, 
     MatCardModule,
     MatButtonModule,
-    MatMenuModule
-
+    MatMenuModule,
+    MatSnackBarModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
