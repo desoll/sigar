@@ -12,7 +12,7 @@ import { Guid } from "guid-typescript";
 export class NovaPatenteComponent implements OnInit {
 
   constructor(private patenteService: PatenteService, private router: Router) { }
-
+ 
     patente: Patente = {
       id: Guid.create(),
       designacao: ''

@@ -1,10 +1,23 @@
-<p>nova-patente works!</p>
 
-<button mat-raised-button (click)="novaPatente()" color="primary">
-    Salvar
- </button>
- 
- 
- <button mat-raised-button (click)="cancelar()" color="danger">
-     Cancelar
-  </button>
+<mat-card class="card" >
+    <mat-card-title class="title">Novo patente</mat-card-title>
+    <form>
+       <mat-form-field>
+          <input matInput placeholder="designacao" [(ngModel)]="patente.designacao" required="nome" name="designacao">
+       </mat-form-field>
+    </form>
+    <mat-card-actions id="card_footer" align="end">
+        <button mat-fab (click)="novaPatente()" color="primary" matTooltipPosition="above" matTooltip="salvar" ripple-effect >
+         <mat-icon>
+                check
+         </mat-icon>
+         </button>
+         <button mat-fab (click)="cancelar()" color="warn" matTooltipPosition="above"  matTooltip="cancelar" ripple-effect>
+            <mat-icon>
+               clear
+            </mat-icon>
+         </button>
+    </mat-card-actions>
+ </mat-card>
+
+

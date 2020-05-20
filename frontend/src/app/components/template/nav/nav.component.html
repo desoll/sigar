@@ -2,31 +2,31 @@
     <mat-sidenav class="sidenav" mode="side" opened fixedInViewport="true" fixedTopGap="64">
         <mat-nav-list class="nav-list">
             <a mat-list-item routerLink="/">
-                <i class="material-icons">
+                <mat-icon>
                     home
-                </i>
+                </mat-icon>
                 Inicio
             </a>
-            <a mat-list-item [matMenuTriggerFor]="menu" rigth>
-                <i class="material-icons">
+            <a mat-list-item [matMenuTriggerFor]="menu">
+                <mat-icon>
                     people_alt
-                </i>
-                Def.users
-            <mat-menu class="nav-list" #menu="matMenu">
-                <a mat-menu-item routerLink="/patente/nova">
-                Novo
-                <i class="material-icons">
+                </mat-icon>
+               &nbsp;   Def.users
+            </a>
+            <mat-menu #menu="matMenu">
+                <a mat-menu-item  routerLink="/patente/nova">
+                Nova Patente
+                <mat-icon color="primary" class="icon">
                     add_circle_outline
-                </i>
+                </mat-icon>
                 </a>
                 <a mat-menu-item routerLink="/patente">
                     Listar
-                    <i class="material-icons">
+                    <mat-icon class="icon"> 
                         list_alt
-                    </i>
+                    </mat-icon>
                 </a>
               </mat-menu>
-            </a>
         </mat-nav-list>
         
     </mat-sidenav>
