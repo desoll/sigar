@@ -18,7 +18,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 
 //Imports para a criar formularios
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 //
@@ -58,7 +59,8 @@ import { NovaPatenteComponent } from './components/patente/nova-patente/nova-pat
     MatFormFieldModule,
     MatInputModule,
     MatTooltipModule,
-    MatIconModule
+    MatIconModule,
+    ReactiveFormsModule
 
   ],
   providers: [],

@@ -7,7 +7,7 @@ class PatenteSchema extends Schema {
   up () {
     this.create('patentes', (table) => {
       table.increments()
-      table.string('name').notNullable()
+      table.string('designacao').notNullable()
       table.timestamps()
     })
   }
