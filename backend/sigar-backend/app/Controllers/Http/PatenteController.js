@@ -3,29 +3,30 @@ const Patente = use('App/Models/Patente');
 class PatenteController {
 
  async criar({request,auth,response}){
-   try{
+ try{
         const dados = request.only(['designacao'])
-        const patenteDesignacao = await Patente.findByOrFail('designacao', dados.designacao);
-       
-        if(patenteDesignacao.designacao != null){
+        const patenteDesignacao = await Patente.findBy('designacao', dados.designacao);
+        console.log(patenteDesignacao) 
 
+        if(patenteDesignacao != null){
+          console.log(patenteDesignacao)
           return response
           .status(400)
           .send({message:{error:'patente já existênte'}});
 
         }
-        
+
          const patente = await Patente.create(dados);
          return response
          .status(200)
          .send({message:{sucess:'Patente inserida com sucesso.'}})
-
+     
   }
-  catch(error){
+  catch(err){
       
     return response
     .status(400)
-    .send({message:{err:error},patente:null});
+    .send({message:{err:err},patente:null});
   }
 
  }

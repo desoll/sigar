@@ -3,15 +3,10 @@
     <mat-card-title class="title">Novo patente</mat-card-title>
     <form [formGroup]="angForm" novalidate>
        <mat-form-field>
-          <input matInput placeholder="designacao" formControlName="designacao" [(ngModel)]="patente.designacao" required name="designacao">
+          <input matInput placeholder="designacao" formControlName="designacao" autocomplete="false" [(ngModel)]="patente.designacao" required name="designacao">
           <mat-icon matSuffix *ngIf="angForm.controls['designacao'].invalid && (angForm.controls['designacao'].dirty || angForm.controls['designacao'].touched)" color="warn">close</mat-icon>
           <mat-icon matSuffix *ngIf="angForm.controls['designacao'].valid && (angForm.controls['designacao'].dirty || angForm.controls['designacao'].touched)" color="primary">check</mat-icon>
        </mat-form-field>
-    <!--   <div *ngIf="angForm.controls['designacao'].invalid && (angForm.controls['designacao'].dirty || angForm.controls['designacao'].touched)"  color="warn">
-         <span *ngIf="angForm.controls['designacao'].errors.required" color="red">
-         Insira o nome da patente.
-         </span>
-       </div>-->
     </form>
     <mat-card-actions id="card_footer" align="end">
         <button mat-fab (click)="novaPatente()"  color="primary" matTooltipPosition="above" matTooltip="salvar" ripple-effect >

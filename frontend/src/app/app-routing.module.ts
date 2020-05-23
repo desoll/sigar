@@ -5,7 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './views/home/home.component';
 import { PatentesComponent } from './views/patentes/patentes.component';
 import { NovaPatenteComponent } from './components/patente/nova-patente/nova-patente.component';
-import { from } from 'rxjs';
+import { NovoUsuarioComponent } from './components/usuario/novo.usuario/novo.usuario.component';
+
 
 const routes: Routes = [{
   path:"",
@@ -18,11 +19,15 @@ const routes: Routes = [{
 {
   path: "patente/nova",
   component: NovaPatenteComponent
+},
+{
+  path:"usuario/novo",
+  component: NovoUsuarioComponent
 }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+ exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -1,14 +1,14 @@
 form{
     display: flex;
-    flex-direction: column;
+  /*  flex-direction: column;*/
 }
 
 .card{
-    width: 100%;
-    display: -ms-flexbox;
+   width: 80%;
+    /* display: -ms-flexbox;
     display: block;
-   /* margin:auto; */
-    margin-top: 12em;
+    margin-top: 12em;*/
+    margin:auto; 
 }
 
 

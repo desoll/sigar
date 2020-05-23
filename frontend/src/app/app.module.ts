@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,7 +23,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 //
-import{ HttpClientModule } from '@angular/common/http';
+import{ HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { GlobalErrorHandlerService } from './global-error-handler.service';
+import { GlobalHttpInterceptorService} from './global-http-Interceptor.service';
+
 
 //Componentes
 import { HeaderComponent } from './components/template/header/header.component';
@@ -32,6 +35,7 @@ import { NavComponent } from './components/template/nav/nav.component';
 import { HomeComponent } from './views/home/home.component';
 import { PatentesComponent } from './views/patentes/patentes.component';
 import { NovaPatenteComponent } from './components/patente/nova-patente/nova-patente.component';
+import { NovoUsuarioComponent } from './components/usuario/novo.usuario/novo.usuario.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +45,8 @@ import { NovaPatenteComponent } from './components/patente/nova-patente/nova-pat
     NavComponent,
     HomeComponent,
     PatentesComponent,
-    NovaPatenteComponent
+    NovaPatenteComponent,
+    NovoUsuarioComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +69,10 @@ import { NovaPatenteComponent } from './components/patente/nova-patente/nova-pat
     MatBadgeModule
 
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS,    useClass: GlobalHttpInterceptorService,    multi: true  },
+    { provide: ErrorHandler, useClass:GlobalErrorHandlerService}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
