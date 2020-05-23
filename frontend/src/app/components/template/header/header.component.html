@@ -14,4 +14,35 @@
               Inicio
           </a>
     </span>
-</mat-toolbar>
+ <span class = "filler"></span>
+ <!--<mat-icon matBadge = "15" matBadgeColor = "warn">home</mat-icon>
+<div align="end">
+
+ -->
+ <span>
+     <span class="title-group" matBadge = "4" matBadgeOverlap = "false">
+     <mat-icon color="primary">notifications</mat-icon>
+     
+   </span>
+    <a mat-icon-button [matMenuTriggerFor]="userMenu" >
+       Dilangue Pedro Coxi
+      <i class="material-icons">person</i>
+    </a>
+   <mat-menu #userMenu="matMenu">
+      <mat-list>
+        <mat-list-item>
+         
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+      <button mat-menu-item >Logout</button>
+    </mat-menu>
+</span>
+</mat-toolbar> 
+
+<!--<mat-toolbar color = "primary">
+    <span class = "gap">File</span>
+    <span>Edit</span>
+    <span class = "filler"></span>
+    <span>About</span>
+ </mat-toolbar>-->

@@ -22,3 +22,12 @@
 .header .title-group i {
     padding-right: 5px;
 }
+
+
+
+.filler {
+    flex: .9 .9 auto;
+ }
+ /*.gap {
+    margin-right: 10px;
+ }*/

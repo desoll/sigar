@@ -20,11 +20,19 @@ export class NovaPatenteComponent implements OnInit {
       designacao: ''
     }
 
-   novaPatente() : void{
-   /* this.patenteService.nova(this.patente).subscribe(() => {
-      this.patenteService.nova(this.patente)
-    this.patenteService.mostrarMensagem("Patente registada com sucesso!");
-    })*/
+   novaPatente() : void {
+    const data = this.angForm.getRawValue();
+    if (this.angForm.valid == true)
+    {
+       this.patenteService.nova(this.patente).subscribe(() => {
+       this.patenteService.nova(this.patente)
+       this.patenteService.mostrarMensagem("Patente registada com sucesso!");
+      })
+    
+   }  
+   else{
+      this.patenteService.mostrarMensagem("preenchimento de campos obrigatorio!");
+   }
    }
    
    createForm() {

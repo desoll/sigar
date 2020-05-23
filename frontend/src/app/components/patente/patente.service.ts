@@ -10,7 +10,7 @@ import { Patente } from './patente.model';
 })
 export class PatenteService {
 
-  baseUrl= ''
+  baseUrl= 'http://127.0.0.1:3333/patente/nova'
 
   constructor(private snackBar: MatSnackBar, private http: HttpClient) { }
 

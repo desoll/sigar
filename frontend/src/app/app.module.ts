@@ -16,7 +16,7 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
-
+import { MatBadgeModule } from '@angular/material/badge';
 //Imports para a criar formularios
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -60,7 +60,8 @@ import { NovaPatenteComponent } from './components/patente/nova-patente/nova-pat
     MatInputModule,
     MatTooltipModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatBadgeModule
 
   ],
   providers: [],
