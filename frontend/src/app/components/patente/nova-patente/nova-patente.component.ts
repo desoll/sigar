@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { PatenteService } from '../patente.service';
 import { Router } from '@angular/router';
 import { Patente } from '../patente.model';
-import { Guid } from "guid-typescript";
+//import { Guid } from "guid-typescript";
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-nova-patente',
@@ -12,18 +11,20 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./nova-patente.component.css']
 })
 export class NovaPatenteComponent implements OnInit {
-  angForm: FormGroup;  
-  constructor(private patenteService: PatenteService, private router: Router, private fb: FormBuilder, private http: HttpClient) { 
+  angForm: FormGroup; 
+
+  constructor(private patenteService: PatenteService, private router: Router, private fb: FormBuilder) { 
     this.createForm();
   }
  
     patente: Patente = {
-      id: Guid.create(), 
+      id: '', 
       designacao: ''
     }
 
    novaPatente() : void {
     const data = this.angForm.getRawValue();
+  
     var mensagem = '';
     if (this.angForm.valid == true)
     {

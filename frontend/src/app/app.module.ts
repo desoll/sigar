@@ -22,8 +22,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { FlexLayoutModule } from '@angular/flex-layout';
 //
-import{ HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { GlobalErrorHandlerService } from './global-error-handler.service';
 import { GlobalHttpInterceptorService} from './global-http-Interceptor.service';
 
@@ -36,6 +38,7 @@ import { HomeComponent } from './views/home/home.component';
 import { PatentesComponent } from './views/patentes/patentes.component';
 import { NovaPatenteComponent } from './components/patente/nova-patente/nova-patente.component';
 import { NovoUsuarioComponent } from './components/usuario/novo.usuario/novo.usuario.component';
+
 
 @NgModule({
   declarations: [
@@ -66,7 +69,9 @@ import { NovoUsuarioComponent } from './components/usuario/novo.usuario/novo.usu
     MatTooltipModule,
     MatIconModule,
     ReactiveFormsModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatSelectModule,
+    FlexLayoutModule
 
   ],
   providers: [

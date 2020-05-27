@@ -4,10 +4,10 @@ form{
 }
 
 .card{
-    width: 100%;
+    width: 50%;
     display: -ms-flexbox;
     display: block;
-   /* margin:auto; */
+    margin:auto; 
     margin-top: 12em;
 }
 

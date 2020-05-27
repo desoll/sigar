@@ -1,13 +1,97 @@
-<mat-card class="card">
-    <mat-card-title class="title">Novo Usuario</mat-card-title>
-    <form>
-        <mat-form-field>
-            <input matInput formControlName="nome" placeholder="Nome Completo" autocomplete="false" required
-                name="nome" />
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput formControlName="telefone" placeholder="N telefonico" autocomplete="false" required
-                name="telefone" />
-        </mat-form-field>
-    </form>
-</mat-card>
+<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" Align="center">
+    <mat-card class="card">
+
+        <mat-card-title class="title">Novo Usuario</mat-card-title>
+        <form class="form-inline" [formGroup]="form" fxLayout novalidate>
+
+            <div class="divImagem" align="center">
+                <!-- <label>Upload Logo</label> -->
+                {{imageError}}
+                <div class="custom-file fileInputProfileWrap">
+                    <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile">
+                    <div class="img-space">
+
+                        <ng-container *ngIf="isImageSaved; else elseTemplate">
+                            <img [src]="cardImageBase64" />
+                        </ng-container>
+                        <ng-template #elseTemplate>
+                            <img src="./assets/img/transferir.png" width="80" height="80" class="img-responsive">
+                        </ng-template>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <a class="btn btn-danger" (click)="removeImage()" *ngIf="isImageSaved">Remove</a>
+         
+                <!--<mat-form-field class="tamanho_campo_medio"  fxFlex.sm="30" fxflex.xs="10%" fxflex="53%">-->
+                <mat-form-field class="tamanho_campo_medio" fxflex="50%" fxFlex.lt-sm="90">
+                    <input matInput placeholder="Nome Completo" formControlName="nome" autocomplete="false" required
+                        name="nome">
+                    <mat-icon matSuffix
+                        *ngIf="form.controls['nome'].invalid && (form.controls['nome'].dirty || form.controls['nome'].touched )"
+                        color="warn">close</mat-icon>
+                    <mat-error
+                        *ngIf="form.controls['nome'].invalid && (form.controls['nome'].dirty || form.controls['nome'].touched)">
+                        insira o nome completo.</mat-error>
+                    <mat-icon matSuffix
+                        *ngIf="form.controls['nome'].valid && (form.controls['nome'].dirty || form.controls['nome'].touched)"
+                        color="primary">check</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field class="tamanho_campo_medio" fxflex="50%" fxFlex.lt-sm="90">
+                    <input matInput placeholder="N telefonico" formControlName="telefone"
+                        ng-pattern="/^[(][0-9]{3}[)] [0-9]{3}-[0-9]{4}$/" autocomplete="false" required name="telefone">
+                    <mat-icon matSuffix
+                        *ngIf="form.controls['telefone'].invalid && (form.controls['telefone'].dirty || form.controls['telefone'].touched )"
+                        color="warn">close</mat-icon>
+                    <mat-error
+                        *ngIf="form.controls['telefone'].invalid && (form.controls['telefone'].dirty || form.controls['telefone'].touched)">
+                        insira o telefone completo.</mat-error>
+                    <mat-icon matSuffix
+                        *ngIf="form.controls['telefone'].valid && (form.controls['telefone'].dirty || form.controls['telefone'].touched)"
+                        color="primary">check</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field class="tamanho_campo_medio" fxflex="50%" fxFlex.lt-sm="90">
+                    <mat-label>Selecione a patente</mat-label>
+                    <mat-select>
+                        <mat-option value="option"></mat-option>
+                    </mat-select>
+                </mat-form-field>
+          
+
+            <mat-form-field class="tamanho_campo_medio" fxflex="50%" fxFlex.lt-sm="90">
+                <mat-label>Senha</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <mat-form-field class="tamanho_campo_medio" fxflex="50%" fxFlex.lt-sm="90">
+                <mat-label>Confirmar Senha</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+        </form>
+        <mat-card-actions align="end">
+            <button mat-fab click="" color="primary" matTooltipPosition="above" matTooltip="salvar" ripple-effect>
+                <mat-icon>
+                    check
+                </mat-icon>
+            </button>
+            <button mat-fab click="" color="warn" matTooltipPosition="above" matTooltip="cancelar" ripple-effect>
+                <mat-icon>
+                    clear
+                </mat-icon>
+            </button>
+        </mat-card-actions>
+    </mat-card>
+
+</div>

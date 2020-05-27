@@ -16,3 +16,14 @@ body {
     vertical-align: middle;
 }
 
+.tamanho_campo_medio{ 
+   width: 17rem;
+   margin: .5em;
+   padding: auto;
+}
+
+.form-inline{
+    display: block !important;
+    padding: auto;
+    margin: auto;
+}
