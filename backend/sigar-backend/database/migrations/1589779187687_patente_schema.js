@@ -6,7 +6,7 @@ const Schema = use('Schema')
 class PatenteSchema extends Schema {
   up () {
     this.create('patentes', (table) => {
-      table.increments()
+      table.uuid('id').primary()
       table.string('designacao').notNullable()
       table.timestamps()
     })

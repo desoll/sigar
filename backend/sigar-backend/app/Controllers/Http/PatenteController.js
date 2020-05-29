@@ -1,5 +1,7 @@
 'use strict'
 const Patente = use('App/Models/Patente');
+const db = use('Database');
+
 class PatenteController {
 
  async criar({request,auth,response}){
@@ -31,8 +33,19 @@ class PatenteController {
 
  }
 
- async index(request,auth,response){
-   console.log("ok");
+ async listar({request,auth,response}){
+    try{
+            const patentes = await db.select('id','designacao')
+            .from('patentes')
+            .orderBy('designacao');
+            
+            return response
+            .send({message:{sucess:true},error: null, data: patentes});
+    }
+    catch(err){
+      return response
+      .send({message:{sucess:true}, error: `Falha ao listar dados: ${err}`, data: null});
+    }
  }
 
 }

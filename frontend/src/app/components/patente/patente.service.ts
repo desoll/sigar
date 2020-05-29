@@ -10,7 +10,7 @@ import { Patente } from './patente.model';
 })
 export class PatenteService {
 
-  baseUrl= 'http://127.0.0.1:3333/patente/nova'
+  baseUrl= 'http://127.0.0.1:3333/patente'
 
   constructor(private snackBar: MatSnackBar, private http: HttpClient) { }
 
@@ -23,8 +23,11 @@ export class PatenteService {
   }
 
   nova(patente: Patente): Observable<Patente>{
-     return this.http.post<Patente>(this.baseUrl, patente)
+     return this.http.post<Patente>(this.baseUrl+'/nova', patente)
   }
   
+  listar(): Observable<Patente[]>{
+    return this.http.get<Patente[]>(this.baseUrl);
+  }
 
 }

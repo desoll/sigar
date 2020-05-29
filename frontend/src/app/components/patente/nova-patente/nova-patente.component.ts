@@ -36,6 +36,7 @@ export class NovaPatenteComponent implements OnInit {
       },
       (err)=>{
         mensagem = err.error.message.error;
+        console.log('Erro: ',err)
         this.patenteService.mostrarMensagem(mensagem);
       })
    }  

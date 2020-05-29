@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 import  * as _ from 'lodash';
+import { PatenteService } from '../../patente/patente.service';
+import { Patente } from '../../patente/patente.model';
+import { Observable } from 'rxjs';
+
+
 @Component({
   selector: 'app-novo.usuario',
   templateUrl: './novo.usuario.component.html',
@@ -13,10 +18,12 @@ export class NovoUsuarioComponent implements OnInit {
   imageError: string;
   isImageSaved: boolean;
   cardImageBase64: string;
-  
-  constructor(private formBuilder: FormBuilder) { }
+  patentes: Patente[];
+
+  constructor(private formBuilder: FormBuilder, private patenteService: PatenteService) { }
   ngOnInit(): void {
     this.validar();
+    this.carregarPatentes();
   }
    
   validar(){
@@ -81,6 +88,17 @@ export class NovoUsuarioComponent implements OnInit {
 
           reader.readAsDataURL(fileInput.target.files[0]);
       }
+
+
+    }
+
+    carregarPatentes(){
+      this.patenteService.listar().subscribe(patentes => 
+        {
+          this.patentes = patentes
+          console.log("Dados: ", patentes['data'])
+        }
+        );
     }
 
 }

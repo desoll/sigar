@@ -57,7 +57,7 @@
                 <mat-form-field class="tamanho_campo_medio" fxflex="50%" fxFlex.lt-sm="90">
                     <mat-label>Selecione a patente</mat-label>
                     <mat-select>
-                        <mat-option value="option"></mat-option>
+                        <mat-option *ngFor="let patente of patentes['data']" [value]="patente.id">{{patente.designacao}}</mat-option>
                     </mat-select>
                 </mat-form-field>
           

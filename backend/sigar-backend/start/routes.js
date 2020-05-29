@@ -3,7 +3,7 @@
 const Route = use('Route')
 
 
-Route.get('patente','PatenteController.index');
+Route.get('patente','PatenteController.listar');
 Route.post('patente/nova','PatenteController.criar');
 
 Route.group(()=>{
