@@ -1,93 +1,59 @@
 'use strict'
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const Provincia = use('App/Models/Provincia');
+const db = use('Database');
 
-/**
- * Resourceful controller for interacting with provincias
- */
 class ProvinciaController {
-  /**
-   * Show a list of all provincias.
-   * GET provincias
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
-  }
+  
+  async criar({ request, auth, response }) {
 
-  /**
-   * Render a form to be used for creating a new provincia.
-   * GET provincias/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
-  }
+    try {
+          const dados = request.only(['designacao'])
+          const provinciaDesignacao = await Provincia.findBy('designacao', dados.designacao);
 
-  /**
-   * Create/save a new provincia.
-   * POST provincias
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
-  }
+          if(provinciaDesignacao != null){
+            return response
+            .status(208)
+            .send({message:{sucess:'província já existênte'}});
+  
+          }
+          
+          const provincia = await Provincia.create(dados);
+          return response
+          .status(200)
+          .send({message:{sucess:'Província inserida com sucesso.'}})
 
-  /**
-   * Display a single provincia.
-   * GET provincias/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
-  }
+    }
+    catch (err) {
+      return response
+      .status(400)
+      .send({message:{err:err},provincia:null});
+    }
 
-  /**
-   * Render a form to update an existing provincia.
-   * GET provincias/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
+  
+  
   }
-
-  /**
-   * Update provincia details.
-   * PUT or PATCH provincias/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
+   
+  
+ async listar({request,auth,response}){
+  try{
+          const provincias = await db.select('id','designacao')
+          .from('provincias')
+          .orderBy('designacao');
+          
+          return response
+          .send({message:{sucess:true},error: null, data: provincias});
   }
-
-  /**
-   * Delete a provincia with id.
-   * DELETE provincias/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+  catch(err){
+    return response
+    .send({message:{sucess:true}, error: `Falha ao listar dados: ${err}`, data: null});
   }
 }
+
+}
+
+
+
+
 
 module.exports = ProvinciaController

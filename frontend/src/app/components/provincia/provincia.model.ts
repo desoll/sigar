@@ -1,6 +1,6 @@
 import * as uuid from 'uuid';
 
-export interface Patente {
+export interface Provincia {
   id: uuid.v4
   designacao: string
 }

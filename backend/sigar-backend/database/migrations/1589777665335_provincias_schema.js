@@ -6,14 +6,8 @@ const Schema = use('Schema')
 class ProvinciasSchema extends Schema {
   up () {
     this.create('provincias', (table) => {
-      table.increments()
-      table.integer('pais_id')
-        .unsigned()
-        .references('id')
-        .inTable('paises')
-        .onUpdate('CASCADE')
-        .onDelete('SET NULL')
-      table.string('name').notNullable()
+      table.uuid('id').primary()
+      table.string('designacao').notNullable()
       table.timestamps()
     })
   }

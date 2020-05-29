@@ -40,7 +40,7 @@ width: 100%!important;
 
 ::ng-deep .mat-menu-content {
     width: 200px !important;
-    height: 120px !important;
+    /*height: 220px !important;*/
 }
 
 

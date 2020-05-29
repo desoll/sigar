@@ -11,7 +11,7 @@
                 <mat-icon>
                     people_alt
                 </mat-icon>
-               &nbsp;   Def.users
+               &nbsp;   Utilizadores
             </a>
             <mat-menu #menu="matMenu">
                 <a mat-menu-item  routerLink="/usuario/novo">
@@ -30,6 +30,20 @@
                     Listar
                     <mat-icon class="icon"> 
                         list_alt
+                    </mat-icon>
+                </a>
+              </mat-menu>
+              <a mat-list-item [matMenuTriggerFor]="menuEndereco">
+                <mat-icon>
+                    explore
+                </mat-icon>
+               &nbsp;   Endereço
+            </a>
+              <mat-menu #menuEndereco="matMenu">
+                <a mat-menu-item routerLink="/provincia/nova">
+                    província
+                    <mat-icon color="primary" class="icon"> 
+                        location_on
                     </mat-icon>
                 </a>
               </mat-menu>
