@@ -2,12 +2,11 @@
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
-const db = use('Database')
 
-class Provincia extends Model {
+class Estado extends Model {
   static boot() {
     super.boot();
-    this.addHook("beforeCreate", "ProvinciaHook.uuid");
+    this.addHook("beforeCreate", "EstadoHook.uuid");
   }
   
   static get primaryKey(){
@@ -16,11 +15,11 @@ class Provincia extends Model {
   static get incrementing(){
     return false;
   }
-    estados(){
-     return this.belongsTo('App/Models/Estado')
+
+  provincias() {
+     return this.hasMany('App/Models/Provincia')
   }
-  
 
 }
 
-module.exports = Provincia
+module.exports = Estado
