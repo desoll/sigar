@@ -6,7 +6,7 @@ import { HomeComponent } from './views/home/home.component';
 import { PatentesComponent } from './views/patentes/patentes.component';
 import { NovaPatenteComponent } from './components/patente/nova-patente/nova-patente.component';
 import { NovoUsuarioComponent } from './components/usuario/novo.usuario/novo.usuario.component';
-import { NovaProvinciaComponent } from './components/provincia/nova-provincia/nova-provincia.component';
+import { NovoMunicipioComponent} from './components/municipio/novo.municipio/novo.municipio.component';
 
 const routes: Routes = [{
   path:"",
@@ -25,13 +25,13 @@ const routes: Routes = [{
   component: NovoUsuarioComponent
 },
 {
-   path:"provincia/nova",
-   component: NovaProvinciaComponent
+  path:"municipio/novo",
+  component:NovoMunicipioComponent
 }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
- exports: [RouterModule]
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }

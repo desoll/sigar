@@ -1,0 +1,42 @@
+<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWarp fxLayoutGap="0.5" Align="center">
+  <mat-card class="card">
+  <mat-card-title class="title">Novo Municipío</mat-card-title>
+  <form [formGroup]="form" novalidate>
+    <mat-form-field fxflex="50%" fxFlex.lt-sm="90">
+      <!--<mat-label class="label"> Selecionar Província </mat-label>
+       --> 
+      <!---(selectionChange)="selected($event)" 
+     
+
+      -->
+         <mat-select [formControl]="provinciaCtrl" placeholder="províncias" [(ngModel)]="municipio.provincia"  #singleSelect>
+          <mat-option>
+            <ngx-mat-select-search [formControl]="ProvinciaFiltroCtrl"
+            placeholderLabel="Buscar..."
+            noEntriesFoundLabel="nenhuma provincia encontrada"></ngx-mat-select-search>
+          </mat-option>
+           <mat-option *ngFor="let provincia of provinciasFiltradas | async" [value]="provincia">{{provincia.designacao}}</mat-option>
+         </mat-select>
+        </mat-form-field>
+ 
+    <mat-form-field fxflex="50%" fxFlex.lt-sm="90">
+      <input matInput placeholder="designacao" formControlName="designacao" autocomplete="false" [(ngModel)]="municipio.designacao" required name="designacao">
+      <mat-icon matSuffix *ngIf="form.controls['designacao'].invalid && (form.controls['designacao'].dirty || form.controls['designacao'].touched )" color="warn">close</mat-icon>
+      <mat-error *ngIf="form.controls['designacao'].invalid && (form.controls['designacao'].dirty || form.controls['designacao'].touched)">insira municipío.</mat-error>
+      <mat-icon matSuffix *ngIf="form.controls['designacao'].valid && (form.controls['designacao'].dirty || form.controls['designacao'].touched)" color="primary">check</mat-icon> 
+    </mat-form-field>
+  </form>
+  <mat-card-actions id="card_footer" align="end">
+    <button mat-fab [formGroup]="form" (click)="novoMunicipio()" color="primary" matTooltipPosition="above" matTooltip="salvar" ripple-effect >
+     <mat-icon>
+            check
+     </mat-icon>
+     </button>
+     <button mat-fab color="warn" matTooltipPosition="above"  matTooltip="cancelar" ripple-effect>
+        <mat-icon>
+           clear
+        </mat-icon>
+     </button>
+</mat-card-actions>
+  </mat-card>
+</div>

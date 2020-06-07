@@ -19,7 +19,9 @@ class Provincia extends Model {
     estados(){
      return this.belongsTo('App/Models/Estado')
   }
-  
+    municipios() {
+    return this.hasMany('App/Models/Municipio','id','provincia_id')
+ }
 
 }
 

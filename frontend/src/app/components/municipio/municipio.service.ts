@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
+import { Municipio } from './municipio.model';
 import { Observable } from 'rxjs';
-import { Provincia } from './provincia.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProvinciaService {
-  baseUrl = 'http://127.0.0.1:3333/provincia'
+export class MunicipioService {
 
-  constructor(private snackBar: MatSnackBar, private http:HttpClient) { }
+  baseUrl = 'http://127.0.0.1:3333/municipio';
+
+  constructor(private snackBar: MatSnackBar, private http: HttpClient) { }
 
   mostrarMensagem(msg: string) : void {
     this.snackBar.open(msg,'x',{
@@ -20,8 +21,7 @@ export class ProvinciaService {
     })
   }
 
-  listar(): Observable<Provincia[]> {
-    return this.http.get<Provincia[]>(this.baseUrl);
+  novo(municipio: Municipio): Observable<Municipio>{
+    return this.http.post<Municipio>(this.baseUrl+'/novo', municipio);
   }
-
 }

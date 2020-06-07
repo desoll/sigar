@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -38,7 +39,7 @@ import { HomeComponent } from './views/home/home.component';
 import { PatentesComponent } from './views/patentes/patentes.component';
 import { NovaPatenteComponent } from './components/patente/nova-patente/nova-patente.component';
 import { NovoUsuarioComponent } from './components/usuario/novo.usuario/novo.usuario.component';
-import { NovaProvinciaComponent } from './components/provincia/nova-provincia/nova-provincia.component';
+import { NovoMunicipioComponent } from './components/municipio/novo.municipio/novo.municipio.component';
 
 
 @NgModule({
@@ -51,10 +52,10 @@ import { NovaProvinciaComponent } from './components/provincia/nova-provincia/no
     PatentesComponent,
     NovaPatenteComponent,
     NovoUsuarioComponent,
-    NovaProvinciaComponent
+    NovoMunicipioComponent
   ],
   imports: [
-    BrowserModule,
+  BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
@@ -73,7 +74,8 @@ import { NovaProvinciaComponent } from './components/provincia/nova-provincia/no
     ReactiveFormsModule,
     MatBadgeModule,
     MatSelectModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    NgxMatSelectSearchModule
 
   ],
   providers: [

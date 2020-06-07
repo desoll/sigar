@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { PatenteService } from '../patente.service';
 import { Router } from '@angular/router';
 import { Patente } from '../patente.model';
-//import { Guid } from "guid-typescript";
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 
 @Component({
@@ -48,7 +47,7 @@ export class NovaPatenteComponent implements OnInit {
    
    createForm() {
     this.angForm = this.fb.group({
-       designacao: ['', Validators.required ]
+       designacao: ['', Validators.required]
     });
   }
 
