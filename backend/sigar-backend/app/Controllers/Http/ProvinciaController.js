@@ -8,10 +8,9 @@ class ProvinciaController {
   
  async listar({request,auth,response}){
   try{
-          const provincias = await db.select('id','designacao')
+          const provincias = await db.select('id',' designacao')
           .from('provincias')
           .orderBy('designacao');
-          
           return response
           .send({message:{sucess:true},error: null, data: provincias});
   }

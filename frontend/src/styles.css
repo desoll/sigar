@@ -17,7 +17,7 @@ body {
 }
 
 .tamanho_campo_medio{ 
-   width: 17rem;
+   width: 17.5rem;
    margin: .5em;
    padding: auto;
 }
@@ -27,3 +27,7 @@ body {
     padding: auto;
     margin: auto;
 }
+
+form {
+    padding : 30px;
+  }

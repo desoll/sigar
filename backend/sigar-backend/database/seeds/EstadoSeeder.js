@@ -2,7 +2,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| DatabaseSeeder
+| EstadoSeeder
 |--------------------------------------------------------------------------
 |
 | Make use of the Factory instance to seed database with dummy data or
@@ -13,9 +13,10 @@
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const Factory = use('Factory')
 
-class DatabaseSeeder {
+class EstadoSeeder {
   async run () {
+    const estado = await Factory.model('App/Models/Estado').createMany(2)
   }
 }
 
-module.exports = DatabaseSeeder
+module.exports = EstadoSeeder

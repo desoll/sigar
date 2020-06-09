@@ -8,7 +8,6 @@ class MunicipioController {
 
       try {
          const dados = request.only(['designacao', 'provincia'])
-         console.log('municipio: ', dados.designacao,' Provincia: ', dados.provincia)
          const municipioExistente = await Municipio.findBy('designacao', dados.designacao)
          const provinciaExistente = await Municipio.findBy('provincia_id', dados.provincia.id)
 
@@ -39,6 +38,24 @@ class MunicipioController {
             .send({ message: { err: err }, municipio: null });
       }
 
+   }
+
+   async listar({request,auth,response}) {
+      try {
+         const dados = request.only('provincia_id');
+
+           const municipios = await db.select('id', ' designacao')
+           .from('municipios')
+           .where('provincia_id', dados.provincia_id)
+           .orderBy('designacao')
+
+           return response
+           .send({message:{sucess:true},error: null, data: municipios});
+      }
+      catch (err) {
+         return response
+         .send({message:{sucess:true}, error: `Falha ao listar dados: ${err}`, data: null});
+      }
    }
 
 }

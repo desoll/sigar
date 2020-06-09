@@ -40,6 +40,7 @@ import { PatentesComponent } from './views/patentes/patentes.component';
 import { NovaPatenteComponent } from './components/patente/nova-patente/nova-patente.component';
 import { NovoUsuarioComponent } from './components/usuario/novo.usuario/novo.usuario.component';
 import { NovoMunicipioComponent } from './components/municipio/novo.municipio/novo.municipio.component';
+import { NovoBairroComponent } from './components/bairro/novo.bairro/novo.bairro.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { NovoMunicipioComponent } from './components/municipio/novo.municipio/no
     PatentesComponent,
     NovaPatenteComponent,
     NovoUsuarioComponent,
-    NovoMunicipioComponent
+    NovoMunicipioComponent,
+    NovoBairroComponent
   ],
   imports: [
   BrowserModule,

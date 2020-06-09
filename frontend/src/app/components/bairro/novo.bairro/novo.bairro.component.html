@@ -1,0 +1,50 @@
+
+  <mat-card class="card">
+    <mat-card-title class="title">Novo Bairro</mat-card-title>
+    <form fxLayout="column">
+      <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+      <mat-form-field fxFlex>
+        <mat-select [formControl]="provinciaCtrl" (selectionChange)="selected($event)" placeholder="províncias"  required
+          #singleSelect>
+          <mat-option>
+            <ngx-mat-select-search [formControl]="ProvinciaFiltroCtrl" placeholderLabel="Buscar..."
+              noEntriesFoundLabel="nenhuma provincia encontrada"></ngx-mat-select-search>
+          </mat-option>
+          <mat-option *ngFor="let provincia of provinciasFiltradas | async" [value]="provincia">{{provincia.designacao}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="provinciaCtrl.hasError('required')">Selecione uma província</mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-select [formControl]="municipioCtrl"  placeholder="municipíos"> #singleSelect>
+           <mat-option>
+           <ngx-mat-select-search placeholderLabel="Buscar..." [formControl]="MunicipioFiltroCtrl"
+              noEntriesFoundLabel="nenhuma municipío encontrado"></ngx-mat-select-search>
+          </mat-option> 
+          <mat-option *ngFor="let municipio of municipiosFiltrados | async" [value]="municipio">{{municipio.designacao}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      </div>
+    
+        <mat-form-field fxFlex>
+          <input matInput placeholder="designacao" formControlName="designacao" autocomplete="false" required name="designacao">
+        </mat-form-field>
+   
+    </form>
+    <mat-card-actions id="card_footer" align="end">
+      <button mat-fab  color="primary" matTooltipPosition="above" matTooltip="salvar"
+        ripple-effect>
+        <mat-icon>
+          check
+        </mat-icon>
+      </button>
+      <button mat-fab color="warn" matTooltipPosition="above" matTooltip="cancelar" ripple-effect>
+        <mat-icon>
+          clear
+        </mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+

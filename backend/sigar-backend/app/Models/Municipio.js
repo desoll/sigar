@@ -20,6 +20,10 @@ class Municipio extends Model {
      return this.belongsTo('App/Models/Provincia')
   }
 
+  municipios() {
+    return this.hasMany('App/Models/Provincia')
+ }
+
 }
 
 module.exports = Municipio

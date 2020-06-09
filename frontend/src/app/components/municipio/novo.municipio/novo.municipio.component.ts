@@ -33,7 +33,7 @@ export class NovoMunicipioComponent implements OnInit, AfterViewInit, OnDestroy 
 municipio: Municipio = {
   id: '',
   designacao:'',
-  provincia: {}
+  provincia: []
   
 }
 
@@ -120,9 +120,12 @@ municipio: Municipio = {
     else{
       this.municipioService.mostrarMensagem("preenchimento de campos obrigatorio!");
     }
-    console.log('Dados municipio: ', this.municipio)
   }
   
+  cancelar() : void {
+    this.router.navigate(['/'])
+   }
+
   /*selected(event: MatSelectChange) {
    const selectedData = {
       text: (event.source.selected as MatOption).viewValue,

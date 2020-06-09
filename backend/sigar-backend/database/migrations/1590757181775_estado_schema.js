@@ -11,9 +11,6 @@ class EstadoSchema extends Schema {
       table.timestamps()
     })
   }
-  run(){
-     Factory.get('estados').create()
-  }
   down () {
     this.drop('estados')
   }
