@@ -126,14 +126,4 @@ municipio: Municipio = {
     this.router.navigate(['/'])
    }
 
-  /*selected(event: MatSelectChange) {
-   const selectedData = {
-      text: (event.source.selected as MatOption).viewValue,
-      value: event.source.value
-    };
-    console.log('dados s', selectedData)
-      
-}*/
-
-
 }

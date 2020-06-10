@@ -1,20 +1,19 @@
-<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWarp fxLayoutGap="0.5" Align="center">
-  <mat-card class="card">
-    <mat-card-title class="title">Novo Municipío</mat-card-title>
-    <form [formGroup]="form" novalidate>
-      <mat-form-field fxflex="50%" fxFlex.lt-sm="90">
+ <mat-card class="card">
+    <mat-card-title class="title" >Novo Municipío</mat-card-title>
+    <form [formGroup]="form" novalidate fxLayout="column">
+      <mat-form-field fxFlex>
         <mat-select [formControl]="provinciaCtrl" placeholder="províncias" [(ngModel)]="municipio.provincia" required
           #singleSelect>
           <mat-option>
-            <ngx-mat-select-search [formControl]="ProvinciaFiltroCtrl" placeholderLabel="Buscar..."
+            <ngx-mat-select-search [formControl]="ProvinciaFiltroCtrl"  placeholderLabel="Buscar..."
               noEntriesFoundLabel="nenhuma provincia encontrada"></ngx-mat-select-search>
           </mat-option>
           <mat-option *ngFor="let provincia of provinciasFiltradas | async" [value]="provincia">{{provincia.designacao}}
           </mat-option>
         </mat-select>
       </mat-form-field>
-
-      <mat-form-field fxflex="50%" fxFlex.lt-sm="90">
+       
+      <mat-form-field fxFlex>
         <input matInput placeholder="designacao" formControlName="designacao" autocomplete="false"
           [(ngModel)]="municipio.designacao" required name="designacao">
         <mat-icon matSuffix
@@ -43,4 +42,3 @@
       </button>
     </mat-card-actions>
   </mat-card>
-</div>

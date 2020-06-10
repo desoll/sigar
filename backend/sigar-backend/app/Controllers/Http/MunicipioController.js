@@ -13,7 +13,6 @@ class MunicipioController {
 
 
          if (municipioExistente != null && provinciaExistente != null) {
-            console.log('municipio encontrado: ', municipioExistente.designacao)
             response
                .status(400)
                .send({ message: { error: 'Municipío já existênte.' } })

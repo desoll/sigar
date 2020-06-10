@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
 import { Provincia } from '../../provincia/provincia.model';
 import { ReplaySubject, Subject } from 'rxjs';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProvinciaService } from '../../provincia/provincia.service';
 import { MunicipioService } from '../../municipio/municipio.service';
 import { MatSelect, MatSelectChange } from '@angular/material/select';
@@ -9,6 +9,9 @@ import { takeUntil, take } from 'rxjs/operators';
 import { Municipio } from '../../municipio/municipio.model';
 import { uuid } from 'uuid';
 import { MatOption } from '@angular/material/core';
+import { Bairro } from '../bairro.model';
+import { Router } from '@angular/router';
+import { BairroService } from '../../bairro/bairro.service';
 
 @Component({
   selector: 'app-novo.bairro',
@@ -25,14 +28,24 @@ export class NovoBairroComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public ProvinciaFiltroCtrl: FormControl = new FormControl();
   public MunicipioFiltroCtrl: FormControl = new FormControl();
-
+  form: FormGroup;
   public provinciasFiltradas: ReplaySubject<Provincia[]> = new ReplaySubject<Provincia[]>(1);
   public municipiosFiltrados: ReplaySubject<Municipio[]> = new ReplaySubject<Municipio[]>(1);
 
   @ViewChild("singleSelect", { static: true }) singleSelect: MatSelect;
 
   protected _onDestroy = new Subject<void>();
-  constructor(private provinciaService: ProvinciaService, private municipioService: MunicipioService) { }
+
+  constructor(private provinciaService: ProvinciaService, private municipioService: MunicipioService, private bairroService: BairroService, private fb: FormBuilder, private router: Router) {
+    this.validarCampos();
+  }
+
+  bairro: Bairro = {
+    id: '',
+    designacao: '',
+    municipio: []
+  }
+
 
   ngOnInit(): void {
     this.carregarProvincias();
@@ -62,7 +75,6 @@ export class NovoBairroComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   carregarMunicipios(provincia_id: uuid.v4) {
-    // this.municipioService.listar('00817a1a-792b-49aa-96f1-51a946934834').subscribe(municipios => {
     this.municipioService.listar(provincia_id).subscribe(municipios => {
       this.municipios = municipios
       this.municipiosFiltrados.next(this.municipios['data'].slice());
@@ -139,6 +151,34 @@ export class NovoBairroComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
+  validarCampos() {
+    this.form = this.fb.group({
+      designacao: ['', Validators.required]
+    });
 
+  }
 
+  novoBairro(): void {
+    const data = this.form.getRawValue();
+    var mensagem = '';
+    if (this.form.valid == true) {
+      this.bairroService.novo(this.bairro).subscribe(resp => {
+        mensagem = resp['message'].sucess;
+        this.bairroService.mostrarMensagem(mensagem);
+        this.router.navigate(['/'])
+      },
+        (err) => {
+          mensagem = err.error.message.error;
+          this.municipioService.mostrarMensagem(mensagem);
+        }
+      );
+    }
+    else{
+      this.municipioService.mostrarMensagem("preenchimento de campos obrigatorio!");
+    }
+  }
+
+  cancelar(): void {
+    this.router.navigate(['/'])
+  }
 }

@@ -1,8 +1,8 @@
-<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" Align="center">
+
 <mat-card class="card" >
     <mat-card-title class="title">Novo patente</mat-card-title>
-    <form [formGroup]="angForm" novalidate>
-       <mat-form-field fxflex="50%" fxFlex.lt-sm="90">
+    <form [formGroup]="angForm" novalidate fxLayout="column">
+       <mat-form-field fxFlex>
           <input matInput placeholder="designacao" formControlName="designacao" autocomplete="false" [(ngModel)]="patente.designacao" required name="designacao">
           <mat-icon matSuffix *ngIf="angForm.controls['designacao'].invalid && (angForm.controls['designacao'].dirty || angForm.controls['designacao'].touched )" color="warn">close</mat-icon>
           <mat-error *ngIf="angForm.controls['designacao'].invalid && (angForm.controls['designacao'].dirty || angForm.controls['designacao'].touched)">insira a patente.</mat-error>
@@ -10,7 +10,7 @@
        </mat-form-field>
 
     </form>
-    <mat-card-actions id="card_footer" align="end">
+    <mat-card-actions id="card_footer"  align="end">
         <button mat-fab (click)="novaPatente()"  color="primary" matTooltipPosition="above" matTooltip="salvar" ripple-effect >
          <mat-icon>
                 check
@@ -24,5 +24,4 @@
     </mat-card-actions>
 
  </mat-card>
-</div>
 

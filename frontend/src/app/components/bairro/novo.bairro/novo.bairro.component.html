@@ -1,10 +1,10 @@
 
   <mat-card class="card">
     <mat-card-title class="title">Novo Bairro</mat-card-title>
-    <form fxLayout="column">
+    <form [formGroup]="form" novalidate fxLayout="column">
       <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
       <mat-form-field fxFlex>
-        <mat-select [formControl]="provinciaCtrl" (selectionChange)="selected($event)" placeholder="províncias"  required
+        <mat-select [formControl]="provinciaCtrl" (selectionChange)="selected($event)"  placeholder="províncias"  required
           #singleSelect>
           <mat-option>
             <ngx-mat-select-search [formControl]="ProvinciaFiltroCtrl" placeholderLabel="Buscar..."
@@ -17,7 +17,7 @@
       </mat-form-field>
 
       <mat-form-field fxFlex>
-        <mat-select [formControl]="municipioCtrl"  placeholder="municipíos"> #singleSelect>
+        <mat-select [formControl]="municipioCtrl"  placeholder="municipíos" [(ngModel)]="bairro.municipio"> #singleSelect>
            <mat-option>
            <ngx-mat-select-search placeholderLabel="Buscar..." [formControl]="MunicipioFiltroCtrl"
               noEntriesFoundLabel="nenhuma municipío encontrado"></ngx-mat-select-search>
@@ -29,18 +29,28 @@
       </div>
     
         <mat-form-field fxFlex>
-          <input matInput placeholder="designacao" formControlName="designacao" autocomplete="false" required name="designacao">
+          <input matInput placeholder="designacao" formControlName="designacao" [(ngModel)]="bairro.designacao" autocomplete="false" required name="designacao">
+          <mat-icon matSuffix
+          *ngIf="form.controls['designacao'].invalid && (form.controls['designacao'].dirty || form.controls['designacao'].touched )"
+          color="warn">close</mat-icon>
+        <mat-error
+          *ngIf="form.controls['designacao'].invalid && (form.controls['designacao'].dirty || form.controls['designacao'].touched)">
+          insira bairro.</mat-error>
+
+        <mat-icon matSuffix
+          *ngIf="form.controls['designacao'].valid && (form.controls['designacao'].dirty || form.controls['designacao'].touched)"
+          color="primary">check</mat-icon>
         </mat-form-field>
    
     </form>
     <mat-card-actions id="card_footer" align="end">
-      <button mat-fab  color="primary" matTooltipPosition="above" matTooltip="salvar"
+      <button mat-fab (click)="novoBairro()" color="primary" matTooltipPosition="above" matTooltip="salvar"
         ripple-effect>
         <mat-icon>
           check
         </mat-icon>
       </button>
-      <button mat-fab color="warn" matTooltipPosition="above" matTooltip="cancelar" ripple-effect>
+      <button mat-fab (click)="cancelar()"  color="warn" matTooltipPosition="above" matTooltip="cancelar" ripple-effect>
         <mat-icon>
           clear
         </mat-icon>
