@@ -8,6 +8,7 @@ import { NovaPatenteComponent } from './components/patente/nova-patente/nova-pat
 import { NovoUsuarioComponent } from './components/usuario/novo.usuario/novo.usuario.component';
 import { NovoMunicipioComponent} from './components/municipio/novo.municipio/novo.municipio.component';
 import { NovoBairroComponent } from './components/bairro/novo.bairro/novo.bairro.component';
+import { NovaRuaComponent } from './components/rua/nova.rua/nova.rua.component';
 
 const routes: Routes = [{
   path:"",
@@ -32,6 +33,10 @@ const routes: Routes = [{
 {
   path:"bairro/novo",
   component:NovoBairroComponent
+}, 
+{
+  path:"rua/nova",
+  component:NovaRuaComponent
 }
 ];
 

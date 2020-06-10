@@ -12,6 +12,7 @@ Route.post('municipio/novo','MunicipioController.criar');
 Route.get('municipio','MunicipioController.listar');
 
 Route.post('bairro/novo','BairroController.criar');
+Route.get('bairro','BairroController.listar');
 
 
 Route.group(()=>{

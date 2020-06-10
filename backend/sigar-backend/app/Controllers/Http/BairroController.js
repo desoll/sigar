@@ -1,5 +1,6 @@
 'use strict'
 const Bairro = use('App/Models/Bairro')
+const db = use('Database');
 class BairroController {
 
   async criar({ request, auth, response }) {
@@ -30,6 +31,24 @@ class BairroController {
         .send({ message: { err: err }, bairro: null });
     }
 
+  }
+
+  async listar({request, auth, response}){
+    try{
+          const dados = request.only(['municipio_id']);
+           console.log('Municipio: ', dados)
+          const bairros = await db.select('id','designacao')
+          .from('bairros')
+          .where('municipio_id', dados.municipio_id)
+          .orderBy('designacao')
+
+          return response
+          .send({message:{sucess:true}, error:null, data: bairros})
+    }
+    catch(err){
+      return response
+      .send({message:{sucess:true}, error: `Falha ao listar dados: ${err}`, data: null});
+    }
   }
 }
 

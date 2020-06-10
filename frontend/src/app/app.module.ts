@@ -41,6 +41,7 @@ import { NovaPatenteComponent } from './components/patente/nova-patente/nova-pat
 import { NovoUsuarioComponent } from './components/usuario/novo.usuario/novo.usuario.component';
 import { NovoMunicipioComponent } from './components/municipio/novo.municipio/novo.municipio.component';
 import { NovoBairroComponent } from './components/bairro/novo.bairro/novo.bairro.component';
+import { NovaRuaComponent } from './components/rua/nova.rua/nova.rua.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { NovoBairroComponent } from './components/bairro/novo.bairro/novo.bairro
     NovaPatenteComponent,
     NovoUsuarioComponent,
     NovoMunicipioComponent,
-    NovoBairroComponent
+    NovoBairroComponent,
+    NovaRuaComponent
   ],
   imports: [
   BrowserModule,
