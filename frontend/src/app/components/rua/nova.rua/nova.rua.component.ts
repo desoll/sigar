@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
 import { Provincia } from '../../provincia/provincia.model';
 import { Municipio } from '../../municipio/municipio.model';
-import { FormControl, FormGroup, FormBuilder, Form } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Form, NgModel, Validators } from '@angular/forms';
 import { ReplaySubject, Subject } from 'rxjs';
 import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { ProvinciaService } from '../../provincia/provincia.service';
@@ -12,6 +12,8 @@ import { MatOption } from '@angular/material/core';
 import { takeUntil, take } from 'rxjs/operators';
 import { uuid } from 'uuid';
 import { Bairro } from '../../bairro/bairro.model';
+import { Rua } from '../rua.model';
+import { RuaService } from '../rua.service';
 
 @Component({
   selector: 'app-nova.rua',
@@ -22,27 +24,35 @@ export class NovaRuaComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public provincias: Provincia[];
   public municipios: Municipio[];
-  public bairros:     Bairro[];
+  public bairros: Bairro[];
 
   public provinciaCtrl: FormControl = new FormControl();
   public municipioCtrl: FormControl = new FormControl();
-  public bairroCtrl:    FormControl = new FormControl();
+  public bairroCtrl: FormControl = new FormControl();
 
   public ProvinciaFiltroCtrl: FormControl = new FormControl();
   public MunicipioFiltroCtrl: FormControl = new FormControl();
-  public BairroFiltroCtrl:    FormControl = new FormControl();
+  public BairroFiltroCtrl: FormControl = new FormControl();
 
   form: FormGroup;
   public provinciasFiltradas: ReplaySubject<Provincia[]> = new ReplaySubject<Provincia[]>(1);
   public municipiosFiltrados: ReplaySubject<Municipio[]> = new ReplaySubject<Municipio[]>(1);
-  public bairrosFiltrados:    ReplaySubject<Bairro[]> = new ReplaySubject<Bairro[]>(1);
+  public bairrosFiltrados: ReplaySubject<Bairro[]> = new ReplaySubject<Bairro[]>(1);
 
 
   @ViewChild("singleSelect", { static: true }) singleSelect: MatSelect;
 
   protected _onDestroy = new Subject<void>();
 
-  constructor(private provinciaService: ProvinciaService, private municipioService: MunicipioService, private bairroService: BairroService, private fb: FormBuilder, private router: Router) { }
+  constructor(private provinciaService: ProvinciaService, private municipioService: MunicipioService, private bairroService: BairroService, private ruaService: RuaService, private fb: FormBuilder, private router: Router) {
+    this.validarCampos();
+  }
+
+  rua: Rua = {
+    id: '',
+    designacao: '',
+    bairro: []
+  }
 
   ngOnInit(): void {
     this.carregarProvincias();
@@ -184,7 +194,7 @@ export class NovaRuaComponent implements OnInit, AfterViewInit, OnDestroy {
     this.carregarMunicipios(selectedData.value.id);
 
   }
-  
+
   selectedMunicipio(event: MatSelectChange) {
     const selectedData = {
       text: (event.source.selected as MatOption).viewValue,
@@ -192,6 +202,36 @@ export class NovaRuaComponent implements OnInit, AfterViewInit, OnDestroy {
     };
     this.carregarBairros(selectedData.value.id);
 
+  }
+
+  validarCampos() {
+    this.form = this.fb.group({
+      designacao: ['', Validators.required]
+    });
+  }
+
+  novaRua(): void {
+    var mensagem = '';
+    if (this.form.valid == true) 
+    {
+      this.ruaService.nova(this.rua).subscribe(resp => {
+        mensagem = resp['message'].sucess;
+        this.ruaService.mostrarMensagem(mensagem);
+        this.router.navigate(['/'])
+      },
+      (err) => {
+         mensagem = err.error.message.error;
+         this.ruaService.mostrarMensagem(mensagem);
+      });
+    }
+    else{
+      this.ruaService.mostrarMensagem("preencha os campos obrigatório!")
+    }
+    console.log('Dados: ', this.rua)
+  }
+
+  cancelar(): void {
+    this.router.navigate(['/'])
   }
 
 }

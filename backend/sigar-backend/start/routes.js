@@ -14,6 +14,8 @@ Route.get('municipio','MunicipioController.listar');
 Route.post('bairro/novo','BairroController.criar');
 Route.get('bairro','BairroController.listar');
 
+Route.post('rua/nova','RuaController.criar')
+
 
 Route.group(()=>{
     Route.post('users/login','UserController.login');

@@ -13,15 +13,15 @@ class Municipio extends Model {
   static get primaryKey(){
     return "id";
   }
-  static get incrementing(){
-    return false;
+    static get incrementing(){
+     return false;
   }
     provincias(){
      return this.belongsTo('App/Models/Provincia')
   }
 
-  municipios() {
-    return this.hasMany('App/Models/Provincia')
+    municipios() {
+     return this.hasMany('App/Models/Municipio')
  }
 
 }

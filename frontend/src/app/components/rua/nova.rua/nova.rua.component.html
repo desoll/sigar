@@ -3,8 +3,8 @@
   <form [formGroup]="form" novalidate fxLayout="column">
     <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
       <mat-form-field fxFlex>
-        <mat-select [formControl]="provinciaCtrl" (selectionChange)="selectedProvincia($event)" placeholder="províncias" required
-          #singleSelect>
+        <mat-select [formControl]="provinciaCtrl" (selectionChange)="selectedProvincia($event)" placeholder="províncias"
+          required #singleSelect>
           <mat-option>
             <ngx-mat-select-search [formControl]="ProvinciaFiltroCtrl" placeholderLabel="Buscar..."
               noEntriesFoundLabel="nenhuma provincia encontrada"></ngx-mat-select-search>
@@ -15,7 +15,8 @@
       </mat-form-field>
 
       <mat-form-field fxFlex>
-        <mat-select [formControl]="municipioCtrl" (selectionChange)="selectedMunicipio($event)" placeholder="municipíos"> #singleSelect>
+        <mat-select [formControl]="municipioCtrl" (selectionChange)="selectedMunicipio($event)"
+          placeholder="municipíos"> #singleSelect>
           <mat-option>
             <ngx-mat-select-search placeholderLabel="Buscar..." [formControl]="MunicipioFiltroCtrl"
               noEntriesFoundLabel="nenhuma municipío encontrado"></ngx-mat-select-search>
@@ -27,7 +28,7 @@
     </div>
     <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
       <mat-form-field fxFlex>
-        <mat-select [formControl]="bairroCtrl" placeholder="bairros"> #singleSelect>
+        <mat-select [formControl]="bairroCtrl" [(ngModel)]="rua.bairro" placeholder="bairros"> #singleSelect>
           <mat-option>
             <ngx-mat-select-search placeholderLabel="Buscar..." [formControl]="BairroFiltroCtrl"
               noEntriesFoundLabel="nenhuma bairro encontrado"></ngx-mat-select-search>
@@ -36,21 +37,30 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-    <mat-form-field fxFlex>
-      <input matInput placeholder="designacao" formControlName="designacao" autocomplete="false" required
-        name="designacao">
-      
-    </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <input matInput placeholder="designacao" formControlName="designacao" autocomplete="false" [(ngModel)]="rua.designacao" >
+        <mat-icon matSuffix
+        *ngIf="form.controls['designacao'].invalid && (form.controls['designacao'].dirty || form.controls['designacao'].touched )"
+        color="warn">close</mat-icon>
+      <mat-error
+        *ngIf="form.controls['designacao'].invalid && (form.controls['designacao'].dirty || form.controls['designacao'].touched)">
+        insira municipío.</mat-error>
+
+      <mat-icon matSuffix
+        *ngIf="form.controls['designacao'].valid && (form.controls['designacao'].dirty || form.controls['designacao'].touched)"
+        color="primary">check</mat-icon>
+      </mat-form-field>
 
     </div>
   </form>
   <mat-card-actions id="card_footer" align="end">
-    <button mat-fab color="primary" matTooltipPosition="above" matTooltip="salvar" ripple-effect>
+    <button mat-fab color="primary" (click)="novaRua()" matTooltipPosition="above" matTooltip="salvar" ripple-effect>
       <mat-icon>
         check
       </mat-icon>
     </button>
-    <button mat-fab color="warn" matTooltipPosition="above" matTooltip="cancelar" ripple-effect>
+    <button mat-fab (click)="cancelar()" color="warn" matTooltipPosition="above" matTooltip="cancelar" ripple-effect>
       <mat-icon>
         clear
       </mat-icon>

@@ -36,7 +36,6 @@ class BairroController {
   async listar({request, auth, response}){
     try{
           const dados = request.only(['municipio_id']);
-           console.log('Municipio: ', dados)
           const bairros = await db.select('id','designacao')
           .from('bairros')
           .where('municipio_id', dados.municipio_id)

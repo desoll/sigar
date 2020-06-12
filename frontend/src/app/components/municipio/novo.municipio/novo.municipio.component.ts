@@ -103,7 +103,6 @@ municipio: Municipio = {
   }
   
   novoMunicipio(): void {
-   const data = this.form.getRawValue();
     var mensagem = '';
     if (this.form.valid == true)
     {
@@ -118,7 +117,7 @@ municipio: Municipio = {
       });
     }
     else{
-      this.municipioService.mostrarMensagem("preenchimento de campos obrigatorio!");
+      this.municipioService.mostrarMensagem("preencha os campos obrigatório!");
     }
   }
   
