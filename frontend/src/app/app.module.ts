@@ -44,6 +44,9 @@ import { NovoBairroComponent } from './components/bairro/novo.bairro/novo.bairro
 import { NovaRuaComponent } from './components/rua/nova.rua/nova.rua.component';
 import { ListarEnderecoComponent } from './components/rua/listar-endereco/listar-endereco.component';
 import { LoginComponent } from './components/usuario/login/login.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { GraficosComponent } from './components/graficos/graficos.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 
 @NgModule({
@@ -60,7 +63,8 @@ import { LoginComponent } from './components/usuario/login/login.component';
     NovoBairroComponent,
     NovaRuaComponent,
     ListarEnderecoComponent,
-    LoginComponent
+    LoginComponent,
+    GraficosComponent
   ],
   imports: [
   BrowserModule,
@@ -83,7 +87,9 @@ import { LoginComponent } from './components/usuario/login/login.component';
     MatBadgeModule,
     MatSelectModule,
     FlexLayoutModule,
-    NgxMatSelectSearchModule
+    NgxMatSelectSearchModule,
+    LayoutModule,
+    MatGridListModule
 
   ],
   providers: [
