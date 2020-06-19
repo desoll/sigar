@@ -55,7 +55,7 @@
     </a>
     <div class="header">
         <span class="title-group">
-            <a [routerLink]="['/routePath']" routerLinkActive="router-link-active" >
+            <a [routerLink]="['/']" routerLinkActive="router-link-active" >
                 <i class="material-icons">
                     home
                 </i>
@@ -63,7 +63,7 @@
             </a>
         </span>
         <span class="title-group">
-            <a [routerLink]="['/routePath']" routerLinkActive="router-link-active">
+            <a [routerLink]="['/']" routerLinkActive="router-link-active">
                 <i class="material-icons">
                     article
                 </i>
@@ -71,7 +71,7 @@
             </a>
         </span>
         <span class="title-group">
-            <a [routerLink]="['/routePath']" routerLinkActive="router-link-active">
+            <a [routerLink]="['/']" routerLinkActive="router-link-active">
                 <i class="material-icons">
                     home
                 </i>
@@ -80,6 +80,12 @@
         </span>
     </div>
     <div fxLayout="row" fxShow="false" fxShow.gt-sm>
+        <span>
+            <span class="title-group" matBadge="4"  matBadgeOverlap="false" matBadgeColor="warn">
+            <mat-icon color="primary">notifications</mat-icon>
+            
+          </span>
+        </span>
         <button mat-button routerLink="/login" *ngIf="!isAuthenticated">
             <mat-icon>login</mat-icon>
             Login
@@ -93,6 +99,7 @@
         <mat-icon>menu</mat-icon>
     </button>
 </mat-toolbar>
+
 <mat-menu x-position="before" #menu="matMenu">
     <button mat-menu-item routerLink="/">
         <mat-icon>home</mat-icon>
