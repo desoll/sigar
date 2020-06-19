@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
+  isAuthenticated: boolean;
   constructor() { }
 
+
+  logout() {
+    //this.authService.logout('/');
+  }
   ngOnInit(): void {
+    // this.isAuthenticated = await this.authService.checkAuthenticated();
   }
 
 }

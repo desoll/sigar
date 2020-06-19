@@ -1,4 +1,4 @@
-<mat-toolbar class="header mat-elevation-z4">
+<!--<mat-toolbar class="header mat-elevation-z4">
     <span>
         <a>
             <i>
@@ -19,7 +19,7 @@
 <div align="end">
 
  -->
- <span>
+<!--<span>
      <span class="title-group" matBadge = "4" matBadgeOverlap = "false">
      <mat-icon color="primary">notifications</mat-icon>
      
@@ -38,7 +38,7 @@
       <button mat-menu-item >Logout</button>
     </mat-menu>
 </span>
-</mat-toolbar> 
+</mat-toolbar> -->
 
 <!--<mat-toolbar color = "primary">
     <span class = "gap">File</span>
@@ -46,3 +46,68 @@
     <span class = "filler"></span>
     <span>About</span>
  </mat-toolbar>-->
+
+<mat-toolbar class="expanded-toolbar mat-elevation-z4">
+    <a>
+        <i>
+            <img class="logo" src="./assets/img/logo.jpeg" width="70" height="70" alt="logo" />
+        </i>
+    </a>
+    <div class="header">
+        <span class="title-group">
+            <a [routerLink]="['/routePath']" routerLinkActive="router-link-active" >
+                <i class="material-icons">
+                    home
+                </i>
+                Inicio
+            </a>
+        </span>
+        <span class="title-group">
+            <a [routerLink]="['/routePath']" routerLinkActive="router-link-active">
+                <i class="material-icons">
+                    article
+                </i>
+                Ocorrências
+            </a>
+        </span>
+        <span class="title-group">
+            <a [routerLink]="['/routePath']" routerLinkActive="router-link-active">
+                <i class="material-icons">
+                    home
+                </i>
+                Sobre
+            </a>
+        </span>
+    </div>
+    <div fxLayout="row" fxShow="false" fxShow.gt-sm>
+        <button mat-button routerLink="/login" *ngIf="!isAuthenticated">
+            <mat-icon>login</mat-icon>
+            Login
+        </button>
+        <button mat-button *ngIf="isAuthenticated" (click)="logout()">
+            <mat-icon>power_settings_new</mat-icon>
+            Logout
+        </button>
+    </div>
+    <button mat-button [mat-menu-trigger-for]="menu" fxHide="false" fxHide.gt-sm>
+        <mat-icon>menu</mat-icon>
+    </button>
+</mat-toolbar>
+<mat-menu x-position="before" #menu="matMenu">
+    <button mat-menu-item routerLink="/">
+        <mat-icon>home</mat-icon>
+        Home
+    </button>
+    <button mat-menu-item routerLink="/game">
+        <mat-icon>gamepad</mat-icon>
+        Play
+    </button>
+    <button mat-menu-item routerLink="/login" *ngIf="!isAuthenticated">
+        <mat-icon>power_settings_new</mat-icon>
+        Login
+    </button>
+    <button mat-menu-item *ngIf="isAuthenticated" (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        Logout
+    </button>
+</mat-menu>

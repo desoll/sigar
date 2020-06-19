@@ -24,5 +24,9 @@ export class RuaService {
   nova(rua:Rua): Observable<Rua>{
     return this.http.post<Rua>(this.baseUrl+'/nova', rua)
   }
+ 
+  listarEndereco(): Observable<object[]> {   
+      return this.http.get<object[]>(this.baseUrl+'/enderecos');
+  }
 
 }

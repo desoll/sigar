@@ -1,8 +1,9 @@
 .header{
     display: flex;
     align-items: center;
+    
 }
-
+/*
 .header a {
     display: flex;
     align-items: center;
@@ -31,3 +32,25 @@
  /*.gap {
     margin-right: 10px;
  }*/
+
+ .expanded-toolbar {
+    justify-content: space-between;
+    align-items: center;
+  }
+
+.expanded-toolbar a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.expanded-toolbar .logo {
+   max-height: 100px;
+   padding-left: 10px;
+   margin-right: 0px;
+
+}
+
+.title-group {
+    margin-right: 1em;
+}

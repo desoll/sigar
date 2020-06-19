@@ -1,5 +1,6 @@
 'use strict'
 const Rua = use('App/Models/Rua')
+const db = use('Database')
 
 class RuaController {
 
@@ -31,6 +32,23 @@ class RuaController {
       .send({ message: { err: err }, rua: null });
     }
   }
+
+  async listarEndereco({request,auth, response}) {
+
+    const dados = await db.select('p.id as provincia_id ','m.id as municipio_id ',' b.id as bairro_id ','r.id as rua_id','p.designacao as provincia',' m.designacao as municipio ',' b.designacao as bairro',' r.designacao as rua ')
+    .from('ruas as r')
+    .innerJoin('bairros as b', 'r.bairro_id','b.id')
+    .innerJoin('municipios as m', 'b.municipio_id','m.id')
+    .innerJoin('provincias as p', 'm.provincia_id','p.id')
+     
+    return response 
+    .send({message:{sucess:true}, error: null, data: dados});
+      
+  }
+  catch (err) {
+    return response
+    .send({message:{sucess:true}, error: `Falha ao listar dados: ${err}`, data: null});
+ }
 
 }
 

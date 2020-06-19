@@ -42,6 +42,8 @@ import { NovoUsuarioComponent } from './components/usuario/novo.usuario/novo.usu
 import { NovoMunicipioComponent } from './components/municipio/novo.municipio/novo.municipio.component';
 import { NovoBairroComponent } from './components/bairro/novo.bairro/novo.bairro.component';
 import { NovaRuaComponent } from './components/rua/nova.rua/nova.rua.component';
+import { ListarEnderecoComponent } from './components/rua/listar-endereco/listar-endereco.component';
+import { LoginComponent } from './components/usuario/login/login.component';
 
 
 @NgModule({
@@ -56,7 +58,9 @@ import { NovaRuaComponent } from './components/rua/nova.rua/nova.rua.component';
     NovoUsuarioComponent,
     NovoMunicipioComponent,
     NovoBairroComponent,
-    NovaRuaComponent
+    NovaRuaComponent,
+    ListarEnderecoComponent,
+    LoginComponent
   ],
   imports: [
   BrowserModule,
