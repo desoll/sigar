@@ -52,10 +52,15 @@ export class ListarEnderecoComponent implements OnInit {
       this.items = resp
       this.dataSource = new MatTableDataSource(this.items['data'])
        console.log('Dados: ', this.dataSource)
-       
+
        this.dataSource.paginator = this.paginator;
        this.dataSource.sort      = this.sort;
     });
+  }
+
+  filtrarTabela(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
 }
