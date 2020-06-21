@@ -47,7 +47,9 @@ import { LoginComponent } from './components/usuario/login/login.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { GraficosComponent } from './components/graficos/graficos.component';
 import { MatGridListModule } from '@angular/material/grid-list';
-
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -89,7 +91,10 @@ import { MatGridListModule } from '@angular/material/grid-list';
     FlexLayoutModule,
     NgxMatSelectSearchModule,
     LayoutModule,
-    MatGridListModule
+    MatGridListModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
 
   ],
   providers: [
