@@ -41,6 +41,10 @@ const routes: Routes = [{
   component:NovaRuaComponent
 },
 {
+  path:"rua/actualizar/:id",
+  component:NovaRuaComponent
+},
+{
   path:"enderecos",
   component: ListarEnderecoComponent
 },

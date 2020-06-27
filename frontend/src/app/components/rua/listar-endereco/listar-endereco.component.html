@@ -55,10 +55,10 @@
       <mat-header-cell *matHeaderCellDef class="mat-cell-bottom"></mat-header-cell>
       <mat-cell *matCellDef="let row" class="mat-cell-bottom">
         <a mat-mini-fab color="primary" class="editar" matTooltipPosition="above"
-          routerLink="/produto/actualizar/{{ row.id }}" ripple-effect routerLinkActive="router-link-active">
+          routerLink="/rua/actualizar/{{ row.rua_id }}" ripple-effect routerLinkActive="router-link-active">
           <i class="material-icons">edit</i>
         </a>
-        <button mat-mini-fab class="apagar" color="warn" matTooltipPosition="above" ripple-effect>
+        <button mat-mini-fab class="apagar" (click)="abrirDialog()" color="warn" matTooltipPosition="above" ripple-effect>
           <i class="material-icons ">delete</i>
         </button>
       </mat-cell>
@@ -70,6 +70,6 @@
   </mat-table>
 
   <mat-paginator #paginator [length]="dataSource?.data.length" [pageIndex]="0" [pageSize]="5"
-    [pageSizeOptions]="[5, 10, 50]"></mat-paginator>
+    [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
 
 </div>

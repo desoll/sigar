@@ -1,39 +1,39 @@
 <mat-card class="card">
-  <mat-card-title class="title">Nova Rua</mat-card-title>
+  <mat-card-title class="title">{{titulo}}</mat-card-title>
   <form [formGroup]="form" novalidate fxLayout="column">
     <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
       <mat-form-field fxFlex>
-        <mat-select [formControl]="provinciaCtrl" (selectionChange)="selectedProvincia($event)" placeholder="províncias"
-          required #singleSelect>
-          <mat-option>
+        <!---->
+      <mat-select formControlName="provinciaCtrl" (selectionChange)="selectedProvincia($event)" placeholder="províncias" #singleSelect>
+        <mat-option>
             <ngx-mat-select-search [formControl]="ProvinciaFiltroCtrl" placeholderLabel="Buscar..."
               noEntriesFoundLabel="nenhuma provincia encontrada"></ngx-mat-select-search>
           </mat-option>
-          <mat-option *ngFor="let provincia of provinciasFiltradas | async" [value]="provincia">{{provincia.designacao}}
+          <mat-option *ngFor="let provincia of provinciasFiltradas | async" [value]="provincia.id">{{provincia.designacao}}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field fxFlex>
-        <mat-select [formControl]="municipioCtrl" (selectionChange)="selectedMunicipio($event)"
-          placeholder="municipíos"> #singleSelect>
+        <mat-select formControlName="municipioCtrl" (selectionChange)="selectedMunicipio($event)"
+          placeholder="municipíos" #singleSelect>
           <mat-option>
             <ngx-mat-select-search placeholderLabel="Buscar..." [formControl]="MunicipioFiltroCtrl"
               noEntriesFoundLabel="nenhuma municipío encontrado"></ngx-mat-select-search>
           </mat-option>
-          <mat-option *ngFor="let municipio of municipiosFiltrados | async" [value]="municipio">{{municipio.designacao}}
+          <mat-option *ngFor="let municipio of municipiosFiltrados | async" [value]="municipio.id">{{municipio.designacao}}
           </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
     <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
       <mat-form-field fxFlex>
-        <mat-select [formControl]="bairroCtrl" [(ngModel)]="rua.bairro" placeholder="bairros"> #singleSelect>
+        <mat-select formControlName="bairroCtrl" [(ngModel)]="rua.bairro" placeholder="bairros" #singleSelect>
           <mat-option>
             <ngx-mat-select-search placeholderLabel="Buscar..." [formControl]="BairroFiltroCtrl"
               noEntriesFoundLabel="nenhuma bairro encontrado"></ngx-mat-select-search>
           </mat-option>
-          <mat-option *ngFor="let bairro of bairrosFiltrados | async" [value]="bairro">{{bairro.designacao}}
+          <mat-option *ngFor="let bairro of bairrosFiltrados | async" [value]="bairro.id">{{bairro.designacao}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -56,8 +56,11 @@
   </form>
   <mat-card-actions id="card_footer" align="end">
     <button mat-fab color="primary" (click)="novaRua()" matTooltipPosition="above" matTooltip="salvar" ripple-effect>
-      <mat-icon>
+      <mat-icon *ngIf="!id">
         check
+      </mat-icon>
+      <mat-icon *ngIf="id">
+        refresh
       </mat-icon>
     </button>
     <button mat-fab (click)="cancelar()" color="warn" matTooltipPosition="above" matTooltip="cancelar" ripple-effect>

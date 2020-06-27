@@ -16,6 +16,7 @@ Route.get('bairro','BairroController.listar');
 
 Route.post('rua/nova','RuaController.criar')
 Route.get('rua/enderecos','RuaController.listarEndereco')
+Route.get('rua','RuaController.listarPorId')
 
 
 Route.group(()=>{

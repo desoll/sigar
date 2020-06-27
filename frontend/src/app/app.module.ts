@@ -18,6 +18,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatDialogModule } from '@angular/material/dialog'
 //Imports para a criar formularios
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -50,6 +51,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { ApagarComponent } from './views/dialog/apagar/apagar.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +68,8 @@ import { MatSortModule } from '@angular/material/sort';
     NovaRuaComponent,
     ListarEnderecoComponent,
     LoginComponent,
-    GraficosComponent
+    GraficosComponent,
+    ApagarComponent
   ],
   imports: [
   BrowserModule,
@@ -94,7 +97,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatGridListModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatDialogModule
 
   ],
   providers: [

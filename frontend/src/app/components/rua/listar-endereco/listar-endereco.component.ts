@@ -3,23 +3,18 @@ import { RuaService } from '../rua.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { ApagarComponent } from 'src/app/views/dialog/apagar/apagar.component';
 
 @Component({
   selector: 'app-listar-endereco',
   templateUrl: './listar-endereco.component.html',
   styleUrls: ['./listar-endereco.component.css']
 })
+
 export class ListarEnderecoComponent implements OnInit {
   items;
-  //displayedColumns = ['provincia_id']
-  //]
-  //displayedColumns =['provincia_id']
-  //,'municipio_id','bairro_id','rua_id','provincia','municipio','bairro','rua']
 
-  /*columnDefinitions = [
-    { def: 'id', label: 'ID', hide: this.id.value},
-    { def: 'description', label: 'Description', hide: this.description.value}
-  ]*/
   columnDefinitions = [
     { def: 'provincia_id', label: 'Id Provincia', hide: true},
     { def: 'municipio_id', label: 'Id municipio', hide: true},
@@ -34,7 +29,7 @@ export class ListarEnderecoComponent implements OnInit {
   ]
   dataSource;
 
-  constructor(private enderecoService:RuaService) { }
+  constructor(private enderecoService:RuaService, public dialog: MatDialog) { }
 
      @ViewChild(MatPaginator) paginator: MatPaginator;
      @ViewChild(MatSort) sort: MatSort;
@@ -51,7 +46,6 @@ export class ListarEnderecoComponent implements OnInit {
     this.enderecoService.listarEndereco().subscribe(resp => {
       this.items = resp
       this.dataSource = new MatTableDataSource(this.items['data'])
-       console.log('Dados: ', this.dataSource)
 
        this.dataSource.paginator = this.paginator;
        this.dataSource.sort      = this.sort;
@@ -61,6 +55,24 @@ export class ListarEnderecoComponent implements OnInit {
   filtrarTabela(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  abrirDialog() : void {
+    let dialogRef = this.dialog.open(ApagarComponent, {
+        width: '300px',
+        //height:'200px'
+    });
+    dialogRef.componentInstance.mensagem = 'Deseja apagar a linha selecionada?';
+      
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if(!dialogResult){
+        console.log('Apagar')
+      }
+      else{
+        console.log('N apaga.')
+      }
+    })
+
   }
 
 }

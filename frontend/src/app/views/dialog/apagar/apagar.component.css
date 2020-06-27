@@ -1,0 +1,20 @@
+mat-icon {
+  font-size: 5em;
+  color:red;
+  width: 1em;
+}
+
+mat-dialog-content {
+  width: 5em;
+  margin: auto;
+  height: 5em;
+  align-content: center;
+}
+
+mat-divider {
+  margin-top: 0.3em;
+}
+
+b{
+  margin-left: 1em;
+}

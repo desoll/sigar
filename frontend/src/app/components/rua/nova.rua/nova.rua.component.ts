@@ -1,13 +1,13 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Provincia } from '../../provincia/provincia.model';
 import { Municipio } from '../../municipio/municipio.model';
 import { FormControl, FormGroup, FormBuilder, Form, NgModel, Validators } from '@angular/forms';
-import { ReplaySubject, Subject } from 'rxjs';
+import { ReplaySubject, Subject, Subscription } from 'rxjs';
 import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { ProvinciaService } from '../../provincia/provincia.service';
 import { MunicipioService } from '../../municipio/municipio.service';
 import { BairroService } from '../../bairro/bairro.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatOption } from '@angular/material/core';
 import { takeUntil, take } from 'rxjs/operators';
 import { uuid } from 'uuid';
@@ -25,7 +25,7 @@ export class NovaRuaComponent implements OnInit, AfterViewInit, OnDestroy {
   public provincias: Provincia[];
   public municipios: Municipio[];
   public bairros: Bairro[];
-
+  provinciaModel;
   public provinciaCtrl: FormControl = new FormControl();
   public municipioCtrl: FormControl = new FormControl();
   public bairroCtrl: FormControl = new FormControl();
@@ -33,19 +33,23 @@ export class NovaRuaComponent implements OnInit, AfterViewInit, OnDestroy {
   public ProvinciaFiltroCtrl: FormControl = new FormControl();
   public MunicipioFiltroCtrl: FormControl = new FormControl();
   public BairroFiltroCtrl: FormControl = new FormControl();
-
+  
+  evento: MatSelectChange;
   form: FormGroup;
   public provinciasFiltradas: ReplaySubject<Provincia[]> = new ReplaySubject<Provincia[]>(1);
   public municipiosFiltrados: ReplaySubject<Municipio[]> = new ReplaySubject<Municipio[]>(1);
   public bairrosFiltrados: ReplaySubject<Bairro[]> = new ReplaySubject<Bairro[]>(1);
-
-
+  titulo: string;
+  id;
   @ViewChild("singleSelect", { static: true }) singleSelect: MatSelect;
+  @Output() onSelectionChange: EventEmitter<any> = new EventEmitter<any>();
 
   protected _onDestroy = new Subject<void>();
+  private _changeSubscription: Subscription = null;
 
-  constructor(private provinciaService: ProvinciaService, private municipioService: MunicipioService, private bairroService: BairroService, private ruaService: RuaService, private fb: FormBuilder, private router: Router) {
-    this.validarCampos();
+
+  constructor(private provinciaService: ProvinciaService, private municipioService: MunicipioService, private bairroService: BairroService, private ruaService: RuaService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
+    
   }
 
   rua: Rua = {
@@ -55,30 +59,63 @@ export class NovaRuaComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.validarCampos();
+    this.id = this.route.snapshot.paramMap.get('id');
     this.carregarProvincias();
     this.carregarMunicipios('');
     this.carregarBairros('');
-
+    this.activarFiltroProvincia();
+    this.activarFiltroMunicipio();
+    this.activarFiltroBairro();
+    this.alterarTitulo(this.id);
+  }
+  
+  activarFiltroProvincia(){
     this.provinciaCtrl.setValue(this.provincias);
-    this.municipioCtrl.setValue(this.municipios);
-    this.bairroCtrl.setValue(this.bairros);
-
     this.ProvinciaFiltroCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
         this.filtrarProvincias();
       });
-
+  }
+  
+  activarFiltroMunicipio(){
+    this.municipioCtrl.setValue(this.municipios);
     this.MunicipioFiltroCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
         this.filtrarMunicipios();
       });
+  }
+  
+  activarFiltroBairro(){
+    this.bairroCtrl.setValue(this.bairros);
+
     this.BairroFiltroCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
         this.filtrarBairros();
       });
+  }
+
+  alterarTitulo(id){
+         
+      if(id != null){
+        this.titulo = 'Actualizar Rua';
+        this.ruaService.listarPorId(id).subscribe(resp => {
+        this.rua.designacao = resp['data']['0'].rua;
+        this.provinciaModel = [{id: resp['data']['0'].provincia_id}, {desiganao: resp['data']['0'].provincia}];
+        this.provinciasFiltradas.next(this.provincias['data'].slice());
+        this.form.get("provinciaCtrl").setValue(resp['data']['0'].provincia_id);
+        this.carregarMunicipios(resp['data']['0'].provincia_id);
+        this.form.get("municipioCtrl").setValue(resp['data']['0'].municipio_id);
+        this.carregarBairros(resp['data']['0'].municipio_id);
+        this.form.get("bairroCtrl").setValue(resp['data']['0'].bairro_id);
+        });
+      }
+      else{
+        this.titulo = 'Nova Rua'
+      }
   }
 
   carregarProvincias() {
@@ -108,20 +145,31 @@ export class NovaRuaComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this._onDestroy.next();
     this._onDestroy.complete();
+
+    if (this._changeSubscription !== null) {
+      this._changeSubscription.unsubscribe();
+    }
   }
 
-  protected setInitialValue() {
+  setInitialValue() {
+
+
+    this.provinciasFiltradas.next(this.provincias['data'].slice());
+  
     this.provinciasFiltradas
       .pipe(take(1), takeUntil(this._onDestroy))
       .subscribe(() => {
         this.singleSelect.compareWith = (a: Provincia, b: Provincia) => a && b && a.id === b.id;
       });
-
+      
+    this.municipiosFiltrados.next(this.municipios['data'].slices());
     this.municipiosFiltrados
       .pipe(take(1), takeUntil(this._onDestroy))
       .subscribe(() => {
         this.singleSelect.compareWith = (m: Municipio, n: Municipio) => m && n && m.id === n.id;
       });
+
+    this.bairrosFiltrados.next(this.bairros['data'].slices());
     this.bairrosFiltrados
       .pipe(take(1), takeUntil(this._onDestroy))
       .subscribe(() => {
@@ -186,12 +234,12 @@ export class NovaRuaComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  selectedProvincia(event: MatSelectChange) {
+  selectedProvincia(event: MatSelectChange){
     const selectedData = {
       text: (event.source.selected as MatOption).viewValue,
       value: event.source.value
     };
-    this.carregarMunicipios(selectedData.value.id);
+    this.carregarMunicipios(selectedData.value);
 
   }
 
@@ -200,17 +248,45 @@ export class NovaRuaComponent implements OnInit, AfterViewInit, OnDestroy {
       text: (event.source.selected as MatOption).viewValue,
       value: event.source.value
     };
-    this.carregarBairros(selectedData.value.id);
+    this.carregarBairros(selectedData.value);
 
   }
 
   validarCampos() {
+
     this.form = this.fb.group({
-      designacao: ['', Validators.required]
+      designacao: ['', Validators.required],
+      provinciaCtrl: ['', Validators.required],
+      municipioCtrl: ['', Validators.required],
+      bairroCtrl: ['', Validators.required]
+
     });
+
+    if (this.provincias != null) {
+      this.setInitialValue();
+
+      this._changeSubscription = this.form.valueChanges.subscribe(data => {
+        this.onSelectionChange.emit(data);
+      });
+
+      this.ProvinciaFiltroCtrl.valueChanges
+        .pipe(takeUntil(this._onDestroy))
+        .subscribe(() => {
+          this.filtrarProvincias();
+        });
+
+      this.MunicipioFiltroCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+          this.filtrarMunicipios();
+      });
+    }
+
   }
 
   novaRua(): void {
+    
+
     var mensagem = '';
     if (this.form.valid == true) 
     {

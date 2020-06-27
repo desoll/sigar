@@ -1,0 +1,11 @@
+
+
+<mat-dialog-content fxLayoutGap> 
+ <mat-icon>help</mat-icon>
+</mat-dialog-content>
+<b class="texto">{{ mensagem }}</b>
+<mat-divider></mat-divider>
+<mat-dialog-actions align="center">
+  <button mat-raised-button color="warn" (click)="fechar()">Não</button>
+  <button mat-raised-button color="primary" (click)="confirmar()" >Sim</button> 
+</mat-dialog-actions>

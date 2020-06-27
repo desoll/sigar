@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Rua } from './rua.model';
+import uuid from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,13 @@ export class RuaService {
  
   listarEndereco(): Observable<object[]> {   
       return this.http.get<object[]>(this.baseUrl+'/enderecos');
+  }
+  
+  listarPorId(id: uuid): Observable<Rua> {
+
+    let parametros = new HttpParams();
+    parametros = parametros.append('id', id);
+    return this.http.get<Rua>(this.baseUrl ,{params: parametros});
   }
 
 }
