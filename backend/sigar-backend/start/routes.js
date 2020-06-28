@@ -15,6 +15,7 @@ Route.post('bairro/novo','BairroController.criar');
 Route.get('bairro','BairroController.listar');
 
 Route.post('rua/nova','RuaController.criar')
+Route.patch('rua/actualizar','RuaController.actualizarDados')
 Route.get('rua/enderecos','RuaController.listarEndereco')
 Route.get('rua','RuaController.listarPorId')
 

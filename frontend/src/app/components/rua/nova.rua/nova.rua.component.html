@@ -2,9 +2,12 @@
   <mat-card-title class="title">{{titulo}}</mat-card-title>
   <form [formGroup]="form" novalidate fxLayout="column">
     <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+      
       <mat-form-field fxFlex>
+      <input matInput hidden autocomplete="false" [(ngModel)]="rua.id" >
         <!---->
-      <mat-select formControlName="provinciaCtrl" (selectionChange)="selectedProvincia($event)" placeholder="províncias" #singleSelect>
+      <mat-select formControlName="provinciaCtrl" (selectionChange)="selectedProvincia($event)" 
+      placeholder="províncias" #singleSelect>
         <mat-option>
             <ngx-mat-select-search [formControl]="ProvinciaFiltroCtrl" placeholderLabel="Buscar..."
               noEntriesFoundLabel="nenhuma provincia encontrada"></ngx-mat-select-search>

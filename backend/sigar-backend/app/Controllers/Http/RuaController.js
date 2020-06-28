@@ -54,13 +54,7 @@ class RuaController {
   async listarPorId({ request, auth, response }) {
     try {
     const dados = request.only(['id']);
-    /*
-    const dados = await db.select('p.id as provincia_id ', 'm.id as municipio_id ', ' b.id as bairro_id ', 'r.id as rua_id', 'p.designacao as provincia', ' m.designacao as municipio ', ' b.designacao as bairro', ' r.designacao as rua ')
-        .from('ruas as r')
-        .innerJoin('bairros as b', 'r.bairro_id', 'b.id')
-        .innerJoin('municipios as m', 'b.municipio_id', 'm.id')
-        .innerJoin('provincias as p', 'm.provincia_id', 'p.id')
-    */ 
+    
       const ruas = await db.select('p.id as provincia_id ', 'm.id as municipio_id ', ' b.id as bairro_id ', 'r.id as rua_id', 'p.designacao as provincia', ' m.designacao as municipio ', ' b.designacao as bairro', ' r.designacao as rua ')
         .from('ruas as r')
         .innerJoin('bairros as b', 'r.bairro_id', 'b.id')
@@ -77,6 +71,26 @@ class RuaController {
     }
   }
   
+  async actualizarDados({request, auth, response}){
+    try{
+    const dados = request.only(['id','designacao', 'bairro'])
+    const rua   = await Rua.findOrFail(dados.id);
+    rua.merge({
+      id: dados.id
+     ,designacao: dados.designacao
+     ,bairro_id: dados.bairro
+    });
+    await rua.save();
+    return response
+          .status(200)
+          .send({ message: { sucess: 'Rua actualizada com sucesso.' } })
+    }
+    catch(err){
+      return response
+      .status(400)
+      .send({ message: { err: err }, rua: null });
+    }
+  }
 
   async apagar({request, auth, response }) {
     try{

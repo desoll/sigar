@@ -37,4 +37,9 @@ export class RuaService {
     return this.http.get<Rua>(this.baseUrl ,{params: parametros});
   }
 
+  actualizar(rua: Rua): Observable<Rua> {
+    let url = this.baseUrl +'/actualizar';
+    return this.http.patch<Rua>(url, rua);
+  }
+
 }

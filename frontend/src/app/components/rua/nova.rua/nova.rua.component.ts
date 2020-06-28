@@ -103,6 +103,7 @@ export class NovaRuaComponent implements OnInit, AfterViewInit, OnDestroy {
       if(id != null){
         this.titulo = 'Actualizar Rua';
         this.ruaService.listarPorId(id).subscribe(resp => {
+        this.rua.id = resp['data'][0].rua_id;
         this.rua.designacao = resp['data']['0'].rua;
         this.provinciaModel = [{id: resp['data']['0'].provincia_id}, {desiganao: resp['data']['0'].provincia}];
         this.provinciasFiltradas.next(this.provincias['data'].slice());
@@ -285,8 +286,38 @@ export class NovaRuaComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   novaRua(): void {
-    
+    if(this.id){
+      console.log('Actualizar!', this.rua)
+      this.actualizarDados();
+    }
+    else{
+       this.salvarDados();
+    }
 
+  }
+
+  actualizarDados(){
+     
+    var mensagem = '';
+    if (this.form.valid == true) 
+    {
+      this.ruaService.actualizar(this.rua).subscribe(resp => {
+        mensagem = resp['message'].sucess;
+        this.ruaService.mostrarMensagem(mensagem);
+        this.router.navigate(['/enderecos'])
+      },
+      (err) => {
+         mensagem = err.error.message.error;
+         this.ruaService.mostrarMensagem(mensagem);
+      });
+    }
+    else{
+      this.ruaService.mostrarMensagem("preencha os campos obrigatório!")
+    }
+  }
+
+  salvarDados(){
+     
     var mensagem = '';
     if (this.form.valid == true) 
     {
@@ -303,8 +334,8 @@ export class NovaRuaComponent implements OnInit, AfterViewInit, OnDestroy {
     else{
       this.ruaService.mostrarMensagem("preencha os campos obrigatório!")
     }
-    console.log('Dados: ', this.rua)
   }
+
 
   cancelar(): void {
     this.router.navigate(['/'])
