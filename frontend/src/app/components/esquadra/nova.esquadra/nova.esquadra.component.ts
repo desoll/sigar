@@ -1,46 +1,53 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Provincia } from '../../provincia/provincia.model';
 import { Municipio } from '../../municipio/municipio.model';
-import { FormControl, FormGroup, FormBuilder, Form, NgModel, Validators } from '@angular/forms';
-import { ReplaySubject, Subject, Subscription } from 'rxjs';
-import { MatSelect, MatSelectChange } from '@angular/material/select';
+import { Bairro } from '../../bairro/bairro.model';
+import { Rua } from '../../rua/rua.model';
 import { ProvinciaService } from '../../provincia/provincia.service';
 import { MunicipioService } from '../../municipio/municipio.service';
 import { BairroService } from '../../bairro/bairro.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { MatOption } from '@angular/material/core';
-import { takeUntil, take } from 'rxjs/operators';
+import { RuaService } from '../../rua/rua.service';
+import { EsquadraService } from '../../esquadra/esquadra.service';
+
 import { uuid } from 'uuid';
-import { Bairro } from '../../bairro/bairro.model';
-import { Rua } from '../rua.model';
-import { RuaService } from '../rua.service';
 
+import { Router, ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup, FormBuilder, Form, NgModel, Validators } from '@angular/forms';
+import { ReplaySubject, Subject, Subscription } from 'rxjs';
+import { MatSelect, MatSelectChange } from '@angular/material/select';
+import { Esquadra } from '../esquadra.model';
+import { takeUntil, take } from 'rxjs/operators';
+import { MatOption } from '@angular/material/core';
 @Component({
-  selector: 'app-nova.rua',
-  templateUrl: './nova.rua.component.html',
-  styleUrls: ['./nova.rua.component.css']
+  selector: 'app-nova.esquadra',
+  templateUrl: './nova.esquadra.component.html',
+  styleUrls: ['./nova.esquadra.component.css']
 })
-export class NovaRuaComponent implements OnInit, AfterViewInit, OnDestroy {
+export class NovaEsquadraComponent implements OnInit, AfterViewInit, OnDestroy {
 
- 
+  
   public provincias: Provincia[];
   public municipios: Municipio[];
   public bairros: Bairro[];
-  provinciaModel;
+  public ruas: Rua[];
+  
   public provinciaCtrl: FormControl = new FormControl();
   public municipioCtrl: FormControl = new FormControl();
   public bairroCtrl: FormControl = new FormControl();
+  public ruaCtrl: FormControl = new FormControl();
 
   public ProvinciaFiltroCtrl: FormControl = new FormControl();
   public MunicipioFiltroCtrl: FormControl = new FormControl();
-  public BairroFiltroCtrl: FormControl = new FormControl();
+  public BairroFiltroCtrl:    FormControl = new FormControl();
+  public RuaFiltroCtrl:       FormControl = new FormControl();
   
   evento: MatSelectChange;
   form: FormGroup;
   public provinciasFiltradas: ReplaySubject<Provincia[]> = new ReplaySubject<Provincia[]>(1);
   public municipiosFiltrados: ReplaySubject<Municipio[]> = new ReplaySubject<Municipio[]>(1);
-  public bairrosFiltrados: ReplaySubject<Bairro[]> = new ReplaySubject<Bairro[]>(1);
-  titulo: string;
+  public bairrosFiltrados:    ReplaySubject<Bairro[]>    = new ReplaySubject<Bairro[]>(1);
+  public ruasFiltrados:       ReplaySubject<Rua[]>       = new ReplaySubject<Rua[]>(1);
+  titulo:string;
   id;
   @ViewChild("singleSelect", { static: true }) singleSelect: MatSelect;
   @Output() onSelectionChange: EventEmitter<any> = new EventEmitter<any>();
@@ -48,27 +55,29 @@ export class NovaRuaComponent implements OnInit, AfterViewInit, OnDestroy {
   protected _onDestroy = new Subject<void>();
   private _changeSubscription: Subscription = null;
 
-
-  constructor(private provinciaService: ProvinciaService, private municipioService: MunicipioService, private bairroService: BairroService, private ruaService: RuaService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
+  constructor(private provinciaService: ProvinciaService, private municipioService: MunicipioService, private bairroService: BairroService, private ruaService: RuaService, private esquadraService: EsquadraService,private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
     
   }
 
-  rua: Rua = {
+    
+   esquadra: Esquadra = {
     id: '',
     designacao: '',
-    bairro: []
-  }
+    rua:[]
+   }
 
-  ngOnInit(): void {
+   ngOnInit(): void {
     this.validarCampos();
     this.id = this.route.snapshot.paramMap.get('id');
     this.carregarProvincias();
     this.carregarMunicipios('');
     this.carregarBairros('');
+    this.carregarRuas('');
     this.activarFiltroProvincia();
     this.activarFiltroMunicipio();
     this.activarFiltroBairro();
-    this.alterarTitulo(this.id);
+    this.activarFiltroRua();
+    this.editarDados(this.id);
   }
   
   activarFiltroProvincia(){
@@ -99,25 +108,34 @@ export class NovaRuaComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
-  alterarTitulo(id){
-         
-      if(id != null){
-        this.titulo = 'Actualizar Rua';
-        this.ruaService.listarPorId(id).subscribe(resp => {
-        this.rua.id = resp['data'][0].rua_id;
-        this.rua.designacao = resp['data']['0'].rua;
-        this.provinciaModel = [{id: resp['data']['0'].provincia_id}, {desiganao: resp['data']['0'].provincia}];
-        this.provinciasFiltradas.next(this.provincias['data'].slice());
+  activarFiltroRua(){
+    this.ruaCtrl.setValue(this.ruas);
+
+    this.RuaFiltroCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filtrarRuas();
+      });
+  }
+
+  editarDados(id){
+    this.titulo = 'Actualizar Dados';
+    this.esquadraService.editarDados(id).subscribe( resp => {
+      this.esquadra.id = resp['data']['0'].id;
+      this.esquadra.designacao = resp['data']['0'].esquadra;
+        
         this.form.get("provinciaCtrl").setValue(resp['data']['0'].provincia_id);
         this.carregarMunicipios(resp['data']['0'].provincia_id);
         this.form.get("municipioCtrl").setValue(resp['data']['0'].municipio_id);
+        
         this.carregarBairros(resp['data']['0'].municipio_id);
         this.form.get("bairroCtrl").setValue(resp['data']['0'].bairro_id);
-        });
-      }
-      else{
-        this.titulo = 'Nova Rua'
-      }
+        
+        this.carregarRuas(resp['data']['0'].bairro_id);
+        this.form.get("ruaCtrl").setValue(resp['data']['0'].rua_id);
+        
+    });
+
   }
 
   carregarProvincias() {
@@ -137,6 +155,13 @@ export class NovaRuaComponent implements OnInit, AfterViewInit, OnDestroy {
     this.bairroService.listar(municipio_id).subscribe(bairros => {
       this.bairros = bairros
       this.bairrosFiltrados.next(this.bairros['data'].slice());
+    });
+  }
+
+  carregarRuas(bairro_id: uuid.v4) {
+    this.ruaService.listarPorBairro(bairro_id).subscribe(ruas => {
+      this.ruas = ruas
+      this.ruasFiltrados.next(this.ruas['data'].slice());
     });
   }
 
@@ -177,6 +202,13 @@ export class NovaRuaComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(() => {
         this.singleSelect.compareWith = (m: Bairro, n: Bairro) => m && n && m.id === n.id;
       });
+
+      this.ruasFiltrados.next(this.ruas['data'].slices());
+      this.ruasFiltrados
+        .pipe(take(1), takeUntil(this._onDestroy))
+        .subscribe(() => {
+          this.singleSelect.compareWith = (m: Rua, n: Rua) => m && n && m.id === n.id;
+        });
   }
 
   filtrarProvincias() {
@@ -235,6 +267,25 @@ export class NovaRuaComponent implements OnInit, AfterViewInit, OnDestroy {
       this.bairros['data'].filter(bairro => bairro.designacao.toLowerCase().indexOf(buscar) > -1)
     );
   }
+  
+  filtrarRuas() {
+    if (!this.ruas['data']) {
+      return;
+    }
+
+    let buscar = this.RuaFiltroCtrl.value;
+
+    if (!buscar) {
+      this.ruasFiltrados.next(this.ruas['data'].slice());
+      return;
+    }
+    else {
+      buscar = buscar.toLowerCase();
+    }
+    this.ruasFiltrados.next(
+      this.ruas['data'].filter(rua => rua.designacao.toLowerCase().indexOf(buscar) > -1)
+    );
+  }
 
   selectedProvincia(event: MatSelectChange){
     const selectedData = {
@@ -254,18 +305,29 @@ export class NovaRuaComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
+  selectedBairro(event: MatSelectChange) {
+    
+    const selectedData = {
+      text: (event.source.selected as MatOption).viewValue,
+      value: event.source.value
+    };
+    this.carregarRuas(selectedData.value);
+
+  }
+
   validarCampos() {
 
     this.form = this.fb.group({
       designacao: ['', Validators.required],
       provinciaCtrl: ['', Validators.required],
       municipioCtrl: ['', Validators.required],
-      bairroCtrl: ['', Validators.required]
+      bairroCtrl: ['', Validators.required],
+      ruaCtrl: ['', Validators.required]
 
     });
 
   }
-
+ 
   enviarDados(): void {
     if(this.id){
       this.actualizarDados();
@@ -276,47 +338,48 @@ export class NovaRuaComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
-  actualizarDados(){
-     
-    var mensagem = '';
-    if (this.form.valid == true) 
-    {
-      this.ruaService.actualizar(this.rua).subscribe(resp => {
-        mensagem = resp['message'].sucess;
-        this.ruaService.mostrarMensagem(mensagem);
-        this.router.navigate(['/enderecos'])
-      },
-      (err) => {
-         mensagem = err.error.message.error;
-         this.ruaService.mostrarMensagem(mensagem);
-      });
-    }
-    else{
-      this.ruaService.mostrarMensagem("preencha os campos obrigatório!")
-    }
-  }
-
   salvarDados(){
-     
+   
     var mensagem = '';
-    if (this.form.valid == true) 
-    {
-      this.ruaService.nova(this.rua).subscribe(resp => {
-        mensagem = resp['message'].sucess;
-        this.ruaService.mostrarMensagem(mensagem);
-        this.router.navigate(['/enderecos'])
+
+    if(this.form.valid){
+      this.esquadraService.nova(this.esquadra).subscribe(resp => {
+         mensagem = resp['message'].sucess;
+         this.esquadraService.mostrarMensagem(mensagem);
+         this.router.navigate(['/esquadra'])
       },
-      (err) => {
-        console.log('Erro:',err)
-         mensagem = err.error.message.error;
-         this.ruaService.mostrarMensagem(mensagem);
+      (err) =>{
+        mensagem = err.error.message.error;
+        this.esquadraService.mostrarMensagem(mensagem);
+        
       });
     }
     else{
-      this.ruaService.mostrarMensagem("preencha os campos obrigatório!")
+      this.esquadraService.mostrarMensagem("preencha os campos obrigatório!")
     }
   }
 
+  actualizarDados(){
+   
+    var mensagem = '';
+
+    if(this.form.valid){
+      this.esquadraService.actualizar(this.esquadra).subscribe(resp => {
+         mensagem = resp['message'].sucess;
+         this.esquadraService.mostrarMensagem(mensagem);
+         this.router.navigate(['/esquadra'])
+      },
+      (err) =>{
+        console.log('Erro:',err)
+        mensagem = err.error.message.error;
+        this.esquadraService.mostrarMensagem(mensagem);
+        
+      });
+    }
+    else{
+      this.esquadraService.mostrarMensagem("preencha os campos obrigatório!")
+    }
+  }
 
   cancelar(): void {
     this.router.navigate(['/'])

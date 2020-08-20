@@ -22,8 +22,9 @@ export class RuaService {
     })
   }
 
-  nova(rua:Rua): Observable<Rua>{
-    return this.http.post<Rua>(this.baseUrl+'/nova', rua)
+  nova(rua: Rua): Observable<Rua>{
+    let url = this.baseUrl +'/nova';
+    return this.http.post<Rua>(url, rua)
   }
  
   listarEndereco(): Observable<object[]> {   
@@ -37,9 +38,22 @@ export class RuaService {
     return this.http.get<Rua>(this.baseUrl ,{params: parametros});
   }
 
+  listarPorBairro(bairro_id: uuid): Observable<Rua[]> {  
+    let params = new HttpParams();
+    params = params.append('bairro_id', bairro_id);
+      return this.http.get<Rua[]>(this.baseUrl+'/listarPorBairro', {params:params});
+    }
+
   actualizar(rua: Rua): Observable<Rua> {
     let url = this.baseUrl +'/actualizar';
     return this.http.patch<Rua>(url, rua);
+  }
+
+  apagarRegisto(id: uuid): Observable<Rua> {
+    let url = this.baseUrl +'/apagar';
+    let parametros = new HttpParams();
+    parametros = parametros.append('rua_id', id);
+    return this.http.delete<Rua>(url ,{params: parametros});
   }
 
 }

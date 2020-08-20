@@ -1,0 +1,23 @@
+.card{
+  width: 50%;
+  display: -ms-flexbox;
+  display: block;
+  margin:auto; 
+  margin-top: 12em;
+}
+
+form{
+  display: flex;
+  flex-direction: unset;
+}
+
+
+button{
+  margin-right: 1rem;
+  }
+  
+  
+  .title{
+    font-size: 1.2em;
+    text-align: left;
+  }

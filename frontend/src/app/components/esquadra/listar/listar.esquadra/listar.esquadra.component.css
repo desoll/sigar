@@ -1,0 +1,36 @@
+.container{
+  background-color: white;
+}
+
+
+.full-width-table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 30%;
+}
+
+.editar> i {
+  color:#d9cd26;
+}
+.apagar > i {
+  color:#e35e6b;
+}
+
+button{
+  justify-content: flex-end;
+  margin: 0.3em;
+ }
+
+ mat-cell-bottom{
+  display:flex !important;
+  justify-content:flex-end!important;
+
+}
+
+::ng-deep .mat-cell-bottom{
+  display:flex !important;
+  justify-content:flex-end!important;
+}

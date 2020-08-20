@@ -11,6 +11,9 @@ import { NovoBairroComponent } from './components/bairro/novo.bairro/novo.bairro
 import { NovaRuaComponent } from './components/rua/nova.rua/nova.rua.component';
 import { ListarEnderecoComponent } from './components/rua/listar-endereco/listar-endereco.component';
 import { LoginComponent } from './components/usuario/login/login.component';
+import { NovaEsquadraComponent } from './components/esquadra/nova.esquadra/nova.esquadra.component';
+import { ListarEsquadraComponent } from './components/esquadra/listar/listar.esquadra/listar.esquadra.component';
+
 
 const routes: Routes = [{
   path:"",
@@ -52,6 +55,18 @@ const routes: Routes = [{
   path: 'login',
   component: LoginComponent
 },
+{
+  path:'esquadra/nova',
+  component: NovaEsquadraComponent
+},
+{
+  path:'esquadra/actualizar/:id',
+  component: NovaEsquadraComponent
+},
+{
+  path:'esquadra',
+  component: ListarEsquadraComponent
+}
 ];
 
 @NgModule({

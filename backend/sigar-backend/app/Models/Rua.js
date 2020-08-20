@@ -15,10 +15,13 @@ class Rua extends Model {
   static get incrementing(){
     return false;
   }
-  municipios(){
+ municipios(){
     return this.belongsTo('App/Models/Municipio')
  }
-   
+ esquadras() {
+   return this.hasMany('App/Models/Esquadra')
+ }
+ 
 }
 
 module.exports = Rua

@@ -1,39 +1,41 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { RuaService } from '../rua.service';
+import { EsquadraService } from '../../esquadra.service';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatDialog } from '@angular/material/dialog';
 import { ApagarComponent } from 'src/app/views/dialog/apagar/apagar.component';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-listar-endereco',
-  templateUrl: './listar-endereco.component.html',
-  styleUrls: ['./listar-endereco.component.css']
+  selector: 'app-listar.esquadra',
+  templateUrl: './listar.esquadra.component.html',
+  styleUrls: ['./listar.esquadra.component.css']
 })
+export class ListarEsquadraComponent implements OnInit {
 
-export class ListarEnderecoComponent implements OnInit {
   items;
 
   columnDefinitions = [
+    { def: 'id',           label: 'Id Esquadra',  hide: true},
     { def: 'provincia_id', label: 'Id Provincia', hide: true},
     { def: 'municipio_id', label: 'Id municipio', hide: true},
     { def: 'bairro_id', label: 'Id bairro', hide: true},
     { def: 'rua_id', label: 'Id rua', hide: true},
 
+    { def: 'esquadra' , label: 'Esquadra', hide: false},
     { def: 'provincia', label: 'Província', hide: false},
     { def: 'municipio', label: 'Municipio', hide: false},
-    { def: 'bairro', label: 'Bairro', hide: false},
-    { def: 'rua', label: 'Rua', hide: false},
-    { def: 'accao', label: 'Acção', hide: false}
+    { def: 'bairro'   , label: 'Bairro', hide: false},
+    { def: 'rua'      , label: 'Rua', hide: false},
+    { def: 'accao'    , label: 'Acção', hide: false}
   ]
   dataSource;
 
-  constructor(private enderecoService:RuaService, public dialog: MatDialog, private router: Router) { }
+  constructor(private esquadraService: EsquadraService, public dialog: MatDialog, private router: Router) { }
 
-     @ViewChild(MatPaginator) paginator: MatPaginator;
-     @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit(): void {
     this.listar();
@@ -41,15 +43,15 @@ export class ListarEnderecoComponent implements OnInit {
 
   getDisplayedColumns():string[] {
     return this.columnDefinitions.filter(cd=>!cd.hide).map(cd=>cd.def);
-}
+  }
 
   listar(){
-    this.enderecoService.listarEndereco().subscribe(resp => {
-      this.items = resp
-      this.dataSource = new MatTableDataSource(this.items['data'])
-
-       this.dataSource.paginator = this.paginator;
-       this.dataSource.sort      = this.sort;
+    this.esquadraService.listar().subscribe(resp => {
+    this.items = resp
+    this.dataSource = new MatTableDataSource(this.items['data'])
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort      = this.sort;
+    
     });
   }
 
@@ -58,7 +60,7 @@ export class ListarEnderecoComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  apagar(rua_id)  {
+  apagar(id)  {
     
     let dialogRef = this.dialog.open(ApagarComponent, {
         width: '300px',
@@ -68,7 +70,7 @@ export class ListarEnderecoComponent implements OnInit {
       
     dialogRef.afterClosed().subscribe(dialogResult => {
       if(!dialogResult){
-        this.apagarRegisto(rua_id);
+        this.apagarRegisto(id);
       }
       else{
        
@@ -77,20 +79,19 @@ export class ListarEnderecoComponent implements OnInit {
 
   }
 
-  apagarRegisto(rua_id)
+  apagarRegisto(id)
   {
     var mensagem = '';
-    if(rua_id != null)
-        this.enderecoService.apagarRegisto(rua_id).subscribe(resp => {
-          mensagem = resp['message'].sucess;  
-          this.router.navigate(['/enderecos']);
+     if(id != null)
+       this.esquadraService.apagarRegisto(id).subscribe(resp => {
+          mensagem = resp['message'].sucess;
+          this.router.navigate(['/esquadra']);
           this.listar();
-          this.enderecoService.mostrarMensagem(mensagem);
-        
+          this.esquadraService.mostrarMensagem(mensagem);
         },
         (err) => {
            mensagem = err.error.message.error;
-           this.enderecoService.mostrarMensagem(mensagem);
+           this.esquadraService.mostrarMensagem(mensagem);
         });
   }
 

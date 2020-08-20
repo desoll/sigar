@@ -7,8 +7,9 @@ class RuaController {
   async criar({ request, auth, response }) {
     try {
       const dados = request.only(['designacao', 'bairro'])
-      const ruaExistente = await Rua.findBy('designacao', dados.designacao)
-      const bairroExistente = await Rua.findBy('bairro_id', dados.bairro.id)
+      
+      const ruaExistente    = await Rua.findBy('designacao', dados.designacao)
+      const bairroExistente = await Rua.findBy('bairro_id', dados.bairro)
 
       if (bairroExistente != null && ruaExistente != null) {
         response
@@ -18,7 +19,7 @@ class RuaController {
       else {
         const rua = await Rua.create({
           designacao: dados.designacao,
-          bairro_id: dados.bairro.id
+          bairro_id: dados.bairro
         });
         return response
           .status(200)
@@ -70,6 +71,23 @@ class RuaController {
         .send({ message: { sucess: true }, error: `Falha ao listar dados: ${err}`, ruas: null });
     }
   }
+  async listarPorBairro({ request, auth, response }) {
+    try {
+    const dados = request.only(['bairro_id']);
+    
+      const ruas = await db.select('r.id as id', ' r.designacao as designacao ')
+        .from('ruas as r')
+        .innerJoin('bairros as b', 'r.bairro_id', 'b.id')
+        .where('r.bairro_id',dados.bairro_id)
+
+      return response
+        .send({ message: { sucess: true }, error: null, data: ruas });
+    }
+    catch (err) {
+      return response
+        .send({ message: { sucess: true }, error: `Falha ao listar dados: ${err}`, ruas: null });
+    }
+  }
   
   async actualizarDados({request, auth, response}){
     try{
@@ -83,7 +101,7 @@ class RuaController {
     await rua.save();
     return response
           .status(200)
-          .send({ message: { sucess: 'Rua actualizada com sucesso.' } })
+          .send({ message: { sucess: 'Dados actualizada com sucesso.' } })
     }
     catch(err){
       return response
@@ -94,12 +112,17 @@ class RuaController {
 
   async apagar({request, auth, response }) {
     try{
-      const parametro = request.only(['rua_id']);
-     // const cliente = await Rua.findOrFail(parametro.rua_id);
-     // await cliente.delete();
+      const dados = request.only(['rua_id']);
+      const rua = await Rua.findOrFail(dados.rua_id);
+      await rua.delete();
+
+      return response
+          .status(200)
+          .send({ message: { sucess: 'Registo eliminado com sucesso.' } })
     }
     catch (err) {
       return response
+        .status(400)
         .send({ message: { sucess: true }, error: `Falha ao apagar linha selecionada: ${err}`, data: null });
     }
 }

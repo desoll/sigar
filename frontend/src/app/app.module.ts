@@ -52,6 +52,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { ApagarComponent } from './views/dialog/apagar/apagar.component';
+import { NovaEsquadraComponent } from './components/esquadra/nova.esquadra/nova.esquadra.component';
+import { ListarEsquadraComponent } from './components/esquadra/listar/listar.esquadra/listar.esquadra.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,9 @@ import { ApagarComponent } from './views/dialog/apagar/apagar.component';
     ListarEnderecoComponent,
     LoginComponent,
     GraficosComponent,
-    ApagarComponent
+    ApagarComponent,
+    NovaEsquadraComponent,
+    ListarEsquadraComponent
   ],
   imports: [
   BrowserModule,

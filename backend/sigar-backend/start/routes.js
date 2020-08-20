@@ -14,11 +14,18 @@ Route.get('municipio','MunicipioController.listar');
 Route.post('bairro/novo','BairroController.criar');
 Route.get('bairro','BairroController.listar');
 
-Route.post('rua/nova','RuaController.criar')
-Route.patch('rua/actualizar','RuaController.actualizarDados')
-Route.get('rua/enderecos','RuaController.listarEndereco')
-Route.get('rua','RuaController.listarPorId')
+Route.post('rua/nova','RuaController.criar');
+Route.patch('rua/actualizar','RuaController.actualizarDados');
+Route.delete('rua/apagar','RuaController.apagar');
+Route.get('rua/enderecos','RuaController.listarEndereco');
+Route.get('rua','RuaController.listarPorId');
+Route.get('rua/listarPorBairro','RuaController.listarPorBairro');
 
+Route.post('esquadra/nova','EsquadraController.criar');
+Route.get('esquadra','EsquadraController.listar');
+Route.get('esquadra/editarDados','EsquadraController.editarDados');
+Route.patch('esquadra/actualizar','EsquadraController.actualizarDados');
+Route.delete('esquadra/apagar', 'EsquadraController.apagar');
 
 Route.group(()=>{
     Route.post('users/login','UserController.login');

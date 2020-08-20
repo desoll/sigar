@@ -29,7 +29,6 @@ export class MunicipioService {
 
 
   listar(provincia_id: uuid): Observable<Municipio[]> {  
-    
   let params = new HttpParams();
   params = params.append('provincia_id', provincia_id);
     return this.http.get<Municipio[]>(this.baseUrl, {params:params});

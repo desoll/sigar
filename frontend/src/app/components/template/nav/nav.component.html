@@ -17,19 +17,20 @@
                 <a mat-menu-item  routerLink="/usuario/novo">
                     Novo Usuario
                     <mat-icon color="primary" class="icon">
-                        add_circle_outline
+                        person_add
                     </mat-icon>
                     </a>
+             
                 <a mat-menu-item  routerLink="/patente/nova">
-                Nova Patente
-                <mat-icon color="primary" class="icon">
-                    add_circle_outline
-                </mat-icon>
+                  Nova Patente
+                  <mat-icon color="primary" class="icon">
+                   add_circle
+                  </mat-icon>
                 </a>
                 <a mat-menu-item routerLink="/patente">
                     Listar
-                    <mat-icon class="icon"> 
-                        list_alt
+                    <mat-icon color="primary" class="icon"> 
+                        list
                     </mat-icon>
                 </a>
               </mat-menu>
@@ -49,23 +50,43 @@
                 <a mat-menu-item [routerLink]="['/bairro/novo']" routerLinkActive="router-link-active" >
                     Bairro
                     <mat-icon color="primary" class="icon">
-                        where_to_vote
+                        center_focus_strong
                     </mat-icon>
 
                 </a>
                 <a mat-menu-item routerLink="/rua/nova">
                     Rua
                     <mat-icon color="primary" class="icon"> 
-                        location_on
+                        my_location
                     </mat-icon>
                 </a>
                 <a mat-menu-item routerLink="/enderecos">
                     Listar Endereços
                     <mat-icon color="primary" class="icon"> 
-                        location_on
+                        format_list_bulleted
                     </mat-icon>
                 </a>
               </mat-menu>
+                <a mat-list-item [matMenuTriggerFor]="menuEsquadra">
+                <mat-icon>
+                    local_police
+                </mat-icon>
+               &nbsp;   Esquadra
+            </a>
+            <mat-menu #menuEsquadra="matMenu">
+               <a mat-menu-item  routerLink="/esquadra/nova">
+                    Nova Esquadra
+                    <mat-icon color="primary" class="icon">
+                        add_circle
+                    </mat-icon>
+                    </a>
+                    <a mat-menu-item routerLink="/esquadra">
+                     Listar
+                    <mat-icon color="primary" class="icon"> 
+                        list
+                    </mat-icon>
+                    </a>
+            </mat-menu>
         </mat-nav-list>
         
     </mat-sidenav>

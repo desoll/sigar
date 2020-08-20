@@ -6,6 +6,12 @@
   
   <mat-table class="full-width-table" [dataSource]="dataSource" matSort aria-label="Elements">
     <!-- Id Provincia Column [dataSource]="dataSource['data']"-->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef [hidden]="true" mat-sort-header>Id Provincia</mat-header-cell>
+      <mat-cell *matCellDef="let row" [hidden]="true">{{row.id}}</mat-cell>
+    </ng-container>
+  
+    <!-- Id Provincia Column [dataSource]="dataSource['data']"-->
     <ng-container matColumnDef="provincia_id">
       <mat-header-cell *matHeaderCellDef [hidden]="true" mat-sort-header>Id Provincia</mat-header-cell>
       <mat-cell *matCellDef="let row" [hidden]="true">{{row.provincia_id}}</mat-cell>
@@ -28,6 +34,11 @@
       <td mat-cell *matCellDef="let row">{{row.rua_id}}</td>
     </ng-container>
 
+ <!-- Name Column -->
+    <ng-container matColumnDef="esquadra">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Esquadra</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.esquadra}}</mat-cell>
+    </ng-container>
     <!-- Name Column -->
     <ng-container matColumnDef="provincia">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Provincia</mat-header-cell>
@@ -55,10 +66,10 @@
       <mat-header-cell *matHeaderCellDef class="mat-cell-bottom"></mat-header-cell>
       <mat-cell *matCellDef="let row" class="mat-cell-bottom">
         <a mat-mini-fab color="primary" class="editar" matTooltipPosition="above"
-          routerLink="/rua/actualizar/{{ row.rua_id }}" ripple-effect routerLinkActive="router-link-active">
+          routerLink="/esquadra/actualizar/{{ row.id }}" ripple-effect routerLinkActive="router-link-active">
           <i class="material-icons">edit</i>
         </a>
-        <button mat-mini-fab class="apagar" (click)="apagar(row.rua_id)" color="warn" matTooltipPosition="above" ripple-effect>
+        <button mat-mini-fab class="apagar" (click)="apagar(row.id)" color="warn" matTooltipPosition="above" ripple-effect>
           <i class="material-icons ">delete</i>
         </button>
       </mat-cell>
