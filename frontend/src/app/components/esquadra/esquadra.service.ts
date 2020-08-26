@@ -31,6 +31,11 @@ export class EsquadraService {
   listar():Observable<object[]> {
     return this.http.get<object[]>(this.baseUrl);
   }
+
+  carregarTodas():Observable<Esquadra[]> {
+    let url = this.baseUrl+'/listar';
+    return this.http.get<Esquadra[]>(url);
+  }
   
   editarDados(id: uuid) : Observable<Esquadra> {
     let parametros = new HttpParams();

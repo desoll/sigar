@@ -33,12 +33,10 @@ class PatenteController {
 
   async listar({ request, auth, response }) {
     try {
-      const patentes = await db.select('id', 'designacao')
-        .from('patentes')
-        .orderBy('designacao');
-
+         const patentes = await db.raw('SELECT id, INITCAP(designacao) as designacao FROM patentes order by designacao desc');
+  
       return response
-        .send({ message: { sucess: true }, error: null, data: patentes });
+        .send({ message: { sucess: true }, error: null, data: patentes[0] });
     }
     catch (err) {
       return response

@@ -21,11 +21,12 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatDialogModule } from '@angular/material/dialog'
 //Imports para a criar formularios
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatAnimatedIconComponent } from './components/template/mat-animated-icon/mat-animated-icon.component';
 //
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { GlobalErrorHandlerService } from './global-error-handler.service';
@@ -54,7 +55,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { ApagarComponent } from './views/dialog/apagar/apagar.component';
 import { NovaEsquadraComponent } from './components/esquadra/nova.esquadra/nova.esquadra.component';
 import { ListarEsquadraComponent } from './components/esquadra/listar/listar.esquadra/listar.esquadra.component';
-
+import { from } from 'rxjs';
+import { VarDirective } from './directives/var.directive';
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,7 +76,9 @@ import { ListarEsquadraComponent } from './components/esquadra/listar/listar.esq
     GraficosComponent,
     ApagarComponent,
     NovaEsquadraComponent,
-    ListarEsquadraComponent
+    ListarEsquadraComponent,
+    MatAnimatedIconComponent,
+    VarDirective
   ],
   imports: [
   BrowserModule,
@@ -102,7 +107,8 @@ import { ListarEsquadraComponent } from './components/esquadra/listar/listar.esq
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatDialogModule
+    MatDialogModule,
+    MatExpansionModule
 
   ],
   providers: [

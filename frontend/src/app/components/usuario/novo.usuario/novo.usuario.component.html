@@ -55,10 +55,17 @@
                 </mat-form-field>
 
                 <mat-form-field class="tamanho_campo_medio" fxflex="50%" fxFlex.lt-sm="90">
-                    <mat-label>Selecione a patente</mat-label>
-                    <mat-select>
-                        <mat-option *ngFor="let patente of patentes['data']" [value]="patente.id">{{patente.designacao}}</mat-option>
-                    </mat-select>
+                   
+
+ <mat-select formControlName="patenteCtrl" 
+          placeholder="patentes" #singleSelect>
+          <mat-option>
+            <ngx-mat-select-search placeholderLabel="Buscar..." [formControl]="PatenteFiltroCtrl"
+              noEntriesFoundLabel="nenhuma patente encontrado"></ngx-mat-select-search>
+          </mat-option>
+          <mat-option *ngFor="let patente of patentesFiltradas | async" [value]="patente.id">{{patente.designacao}}</mat-option>
+        </mat-select>
+
                 </mat-form-field>
           
 
@@ -79,6 +86,89 @@
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
             </mat-form-field>
+
+             <mat-form-field fxFlex>
+      <mat-select formControlName="esquadraCtrl" 
+      placeholder="esquadras" #singleSelect>
+        <mat-option>
+            <ngx-mat-select-search [formControl]="EsquadraFiltroCtrl" placeholderLabel="Buscar..."
+              noEntriesFoundLabel="nenhuma esquadra encontrada"></ngx-mat-select-search>
+          </mat-option>
+          <mat-option *ngFor="let esquadra of esquadrasFiltradas | async" [value]="esquadra.id">{{esquadra.designacao}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+<mat-accordion>
+  
+  <mat-expansion-panel (opened)="panelOpenState = true"
+                       (closed)="panelOpenState = false">
+    <mat-expansion-panel-header >
+      <mat-panel-title>
+      Endereço
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+        <mat-icon class="icon" *ngIf="!panelOpenState">
+          explore
+        </mat-icon>
+        <mat-icon class="icon" *ngIf="panelOpenState">
+          explore_off
+        </mat-icon>
+    </mat-expansion-panel-header>
+      <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+      <mat-form-field fxFlex>
+      <mat-select formControlName="provinciaCtrl" (selectionChange)="selectedProvincia($event)" 
+      placeholder="províncias" #singleSelect>
+        <mat-option>
+            <ngx-mat-select-search [formControl]="ProvinciaFiltroCtrl" placeholderLabel="Buscar..."
+              noEntriesFoundLabel="nenhuma provincia encontrada"></ngx-mat-select-search>
+          </mat-option>
+          <mat-option *ngFor="let provincia of provinciasFiltradas | async" [value]="provincia.id">{{provincia.designacao}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+       <mat-form-field fxFlex>
+        <mat-select formControlName="municipioCtrl" (selectionChange)="selectedMunicipio($event)"
+          placeholder="municipíos" #singleSelect>
+          <mat-option>
+            <ngx-mat-select-search placeholderLabel="Buscar..." [formControl]="MunicipioFiltroCtrl"
+              noEntriesFoundLabel="nenhuma municipío encontrado"></ngx-mat-select-search>
+          </mat-option>
+          <mat-option *ngFor="let municipio of municipiosFiltrados | async" [value]="municipio.id">{{municipio.designacao}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      </div>
+      <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+  
+       <mat-form-field fxFlex>
+        <mat-select formControlName="bairroCtrl" (selectionChange)="selectedBairro($event)" 
+          placeholder="bairros" #singleSelect>
+          <mat-option>
+            <ngx-mat-select-search placeholderLabel="Buscar..." [formControl]="BairroFiltroCtrl"
+              noEntriesFoundLabel="nenhuma bairro encontrado"></ngx-mat-select-search>
+          </mat-option>
+          <mat-option *ngFor="let bairro of bairrosFiltrados | async" [value]="bairro.id">{{bairro.designacao}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-select formControlName="ruaCtrl" [(ngModel)]="usuario.rua" placeholder="ruas" #singleSelect>
+          <mat-option>
+            <ngx-mat-select-search [formControl]="RuaFiltroCtrl" placeholderLabel="Buscar..." 
+              noEntriesFoundLabel="nenhuma rua encontrado"></ngx-mat-select-search>
+          </mat-option>
+          <mat-option *ngFor="let rua of ruasFiltrados | async" [value]="rua.id">{{rua.designacao}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  </div>
+  </mat-expansion-panel>
+</mat-accordion>
+
+
         </form>
         <mat-card-actions align="end">
             <button mat-fab click="" color="primary" matTooltipPosition="above" matTooltip="salvar" ripple-effect>
@@ -93,5 +183,7 @@
             </button>
         </mat-card-actions>
     </mat-card>
+
+
 
 </div>

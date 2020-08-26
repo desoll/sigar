@@ -7,12 +7,16 @@
                 </mat-icon>
                 Inicio
             </a>
-            <a mat-list-item [matMenuTriggerFor]="menu">
+            <mat-animated-icon start="keyboard_arrow_down" class="icon-1 mat-icon" end="keyboard_arrow_up" colorStart="none" colorEnd="none" [animate]="animate_utilizador"></mat-animated-icon>
+            <a mat-list-item [matMenuTriggerFor]="menu"  (mouseenter) = "desabilitarUsuario()"  (click) = "toggleUsuario()" >
+            
                 <mat-icon>
                     people_alt
                 </mat-icon>
-               &nbsp;   Utilizadores
+               &nbsp;   Utilizadores 
+              
             </a>
+           
             <mat-menu #menu="matMenu">
                 <a mat-menu-item  routerLink="/usuario/novo">
                     Novo Usuario
@@ -34,12 +38,15 @@
                     </mat-icon>
                 </a>
               </mat-menu>
-              <a mat-list-item [matMenuTriggerFor]="menuEndereco">
+              <mat-animated-icon start="keyboard_arrow_down" class="icon-1 mat-icon" end="keyboard_arrow_up" colorStart="none" colorEnd="none" [animate]="animate_endereco"></mat-animated-icon>
+             <a mat-list-item [matMenuTriggerFor]="menuEndereco" (mouseenter) = "desabilitarEndereco()"  (click) = "toggleEndereco()" >
                 <mat-icon>
                     explore
                 </mat-icon>
                &nbsp;   Endereço
-            </a>
+              
+            </a> 
+            
               <mat-menu #menuEndereco="matMenu">
                 <a mat-menu-item routerLink="/municipio/novo">
                     Municipío
@@ -52,7 +59,6 @@
                     <mat-icon color="primary" class="icon">
                         center_focus_strong
                     </mat-icon>
-
                 </a>
                 <a mat-menu-item routerLink="/rua/nova">
                     Rua
@@ -60,6 +66,7 @@
                         my_location
                     </mat-icon>
                 </a>
+
                 <a mat-menu-item routerLink="/enderecos">
                     Listar Endereços
                     <mat-icon color="primary" class="icon"> 
@@ -67,7 +74,9 @@
                     </mat-icon>
                 </a>
               </mat-menu>
-                <a mat-list-item [matMenuTriggerFor]="menuEsquadra">
+                <mat-animated-icon start="keyboard_arrow_down" class="icon-1 mat-icon" end="keyboard_arrow_up" colorStart="none" colorEnd="none" [animate]="animate_esquadra"></mat-animated-icon>
+            
+                <a mat-list-item [matMenuTriggerFor]="menuEsquadra"  (mouseenter) = "desabilitarEsquadra()"  (click) = "toggleEsquadra()" >
                 <mat-icon>
                     local_police
                 </mat-icon>

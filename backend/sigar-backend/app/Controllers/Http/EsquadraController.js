@@ -38,7 +38,21 @@ class EsquadraController {
 
   }
 
-  async listar({request, auth, response}){
+
+  async listar({ request, auth, response }) {
+    try {
+         const esquadras = await db.raw('SELECT id, INITCAP(designacao) as designacao FROM esquadras order by designacao desc');
+  
+      return response
+        .send({ message: { sucess: true }, error: null, data: esquadras[0] });
+    }
+    catch (err) {
+      return response
+        .send({ message: { sucess: true }, error: `Falha ao listar dados: ${err}`, data: null });
+    }
+  }
+
+  async listarGeral({request, auth, response}){
 
      try{
          const dados = await db.select('p.id as provincia_id ', 'm.id as municipio_id ', ' b.id as bairro_id ', 'r.id as rua_id',' e.id ', 'p.designacao as provincia', ' m.designacao as municipio ', ' b.designacao as bairro', ' r.designacao as rua ','e.designacao as esquadra')

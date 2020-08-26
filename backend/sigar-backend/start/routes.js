@@ -22,7 +22,8 @@ Route.get('rua','RuaController.listarPorId');
 Route.get('rua/listarPorBairro','RuaController.listarPorBairro');
 
 Route.post('esquadra/nova','EsquadraController.criar');
-Route.get('esquadra','EsquadraController.listar');
+Route.get('esquadra','EsquadraController.listarGeral');
+Route.get('esquadra/listar','EsquadraController.listar');
 Route.get('esquadra/editarDados','EsquadraController.editarDados');
 Route.patch('esquadra/actualizar','EsquadraController.actualizarDados');
 Route.delete('esquadra/apagar', 'EsquadraController.apagar');
