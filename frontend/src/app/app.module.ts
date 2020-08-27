@@ -57,6 +57,7 @@ import { NovaEsquadraComponent } from './components/esquadra/nova.esquadra/nova.
 import { ListarEsquadraComponent } from './components/esquadra/listar/listar.esquadra/listar.esquadra.component';
 import { from } from 'rxjs';
 import { VarDirective } from './directives/var.directive';
+import { TelefoneMaskDirective } from './directives/telefone-mask.directive';
  
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { VarDirective } from './directives/var.directive';
     NovaEsquadraComponent,
     ListarEsquadraComponent,
     MatAnimatedIconComponent,
-    VarDirective
+    VarDirective,
+    TelefoneMaskDirective
   ],
   imports: [
   BrowserModule,

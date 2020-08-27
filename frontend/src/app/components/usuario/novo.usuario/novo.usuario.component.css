@@ -1,15 +1,17 @@
-form{
-    display: inline-flex;
-  /*  flex-direction: column;*/
+.card{
+  width: 80%;
+  display: -ms-flexbox;
+  display: block;
+  margin:auto; 
+  margin-top: 12em;
 }
 
-.card{
-   width: 80%;
-    /* display: -ms-flexbox;
-    display: block;
-    margin-top: 12em;*/
-    margin:auto; 
+form{
+  display: flex;
+  flex-direction: unset;
 }
+
+
 
 
 
@@ -20,6 +22,7 @@ button{
 
 .title{
     font-size: 1.2em;
+    text-align: left;
 }
 
 /*Imagem*/

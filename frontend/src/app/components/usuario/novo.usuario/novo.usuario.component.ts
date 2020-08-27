@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { FormGroup,  FormBuilder,  Validators, FormControl } from '@angular/forms';
+import { FormGroup,  FormBuilder,  Validators, FormControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import  * as _ from 'lodash';
 import { PatenteService } from '../../patente/patente.service';
 import { Patente } from '../../patente/patente.model';
@@ -19,6 +19,8 @@ import { RuaService } from '../../rua/rua.service';
 import { Usuario } from '../usuario.model';
 import { Esquadra } from '../../esquadra/esquadra.model';
 import { EsquadraService } from '../../esquadra/esquadra.service';
+import * as CryptoJS from 'crypto-js';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-novo.usuario',
@@ -67,7 +69,7 @@ export class NovoUsuarioComponent implements OnInit {
 
   protected _onDestroy = new Subject<void>();
   private _changeSubscription: Subscription = null;
-
+  minPw = 8;
   constructor(private provinciaService: ProvinciaService,  private municipioService: MunicipioService, private bairroService: BairroService, private ruaService: RuaService, private formBuilder: FormBuilder, private patenteService: PatenteService, private esquadraService: EsquadraService) { }
  
   usuario: Usuario = {
@@ -78,7 +80,8 @@ export class NovoUsuarioComponent implements OnInit {
     email: '',
     rua: [],
     esquadra: [],
-    patente: []
+    patente: [],
+    foto:null
   }
  
   ngOnInit(): void {
@@ -103,12 +106,17 @@ export class NovoUsuarioComponent implements OnInit {
     this.form = this.formBuilder.group({
        nome: ['',Validators.required],
        telefone: ['',Validators.required],
+       email: ['',Validators.required],
+       senha: ['', Validators.required],
+       foto: ['',Validators.required],
+       confSenha:['',Validators.required],
        patenteCtrl: ['', Validators.required],
        provinciaCtrl: ['', Validators.required],
        municipioCtrl: ['', Validators.required],
        bairroCtrl: ['', Validators.required],
-       ruaCtrl: ['', Validators.required]
-    });
+       ruaCtrl: ['', Validators.required],
+       esquadraCtrl: ['', Validators.required],
+    }, {validator: this.passwordMatchValidator});
   }
     removeImage() {
       this.cardImageBase64 = null;
@@ -466,6 +474,8 @@ export class NovoUsuarioComponent implements OnInit {
 
   }
 
+  get senha() { return this.form.get('senha'); }
+  get confSenha() { return this.form.get('confSenha'); }
 
   selectedBairro(event: MatSelectChange) {
     
@@ -477,4 +487,27 @@ export class NovoUsuarioComponent implements OnInit {
 
   }
 
+    passwordMatchValidator: ValidatorFn = (formGroup: FormGroup): ValidationErrors | null => {
+    if (formGroup.get('senha').value === formGroup.get('confSenha').value)
+      return null;
+    else
+      return {passwordMismatch: true};
+  };
+
+  onPasswordInput() {
+    if (this.form.hasError('passwordMismatch'))
+      this.confSenha.setErrors([{'passwordMismatch': true}]);
+    else
+      this.confSenha.setErrors(null);
+  }
+
+  enviar(){
+   var pass =  CryptoJS.AES.encrypt(this.usuario.senha.trim(), 'd3501').toString();
+   this.usuario.senha = this.usuario.senha ?  pass: ''; 
+    console.log('Dados: ', this.usuario)
+  }
+
+
+
 }
+

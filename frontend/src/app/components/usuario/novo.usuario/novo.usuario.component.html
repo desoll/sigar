@@ -1,14 +1,14 @@
-<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" Align="center">
+
     <mat-card class="card">
 
         <mat-card-title class="title">Novo Usuario</mat-card-title>
-        <form class="form-inline" [formGroup]="form" fxLayout novalidate>
+        <form [formGroup]="form" novalidate fxLayout="column">
 
             <div class="divImagem" align="center">
                 <!-- <label>Upload Logo</label> -->
                 {{imageError}}
                 <div class="custom-file fileInputProfileWrap">
-                    <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile">
+                    <input type="file" (change)="fileChangeEvent($event)" formControlName="foto" [(ngModel)]="usuario.foto" class="fileInputProfile">
                     <div class="img-space">
 
                         <ng-container *ngIf="isImageSaved; else elseTemplate">
@@ -24,11 +24,10 @@
             </div>
 
             <a class="btn btn-danger" (click)="removeImage()" *ngIf="isImageSaved">Remove</a>
-         
-                <!--<mat-form-field class="tamanho_campo_medio"  fxFlex.sm="30" fxflex.xs="10%" fxflex="53%">-->
-                <mat-form-field class="tamanho_campo_medio" fxflex="50%" fxFlex.lt-sm="90">
-                    <input matInput placeholder="Nome Completo" formControlName="nome" autocomplete="false" required
-                        name="nome">
+         <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+
+                <mat-form-field fxFlex>
+                    <input matInput placeholder="Nome Completo" [(ngModel)]="usuario.nome" formControlName="nome" autocomplete="false" required name="nome">
                     <mat-icon matSuffix
                         *ngIf="form.controls['nome'].invalid && (form.controls['nome'].dirty || form.controls['nome'].touched )"
                         color="warn">close</mat-icon>
@@ -40,56 +39,75 @@
                         color="primary">check</mat-icon>
                 </mat-form-field>
 
-                <mat-form-field class="tamanho_campo_medio" fxflex="50%" fxFlex.lt-sm="90">
-                    <input matInput placeholder="N telefonico" formControlName="telefone"
-                        ng-pattern="/^[(][0-9]{3}[)] [0-9]{3}-[0-9]{4}$/" autocomplete="false" required name="telefone">
+                <mat-form-field fxFlex>
+                    <input matInput placeholder="N telefonico" formControlName="telefone" appPhoneMask maxlength="15" [(ngModel)]="usuario.telefone"
+                        autocomplete="false" required name="telefone">
                     <mat-icon matSuffix
                         *ngIf="form.controls['telefone'].invalid && (form.controls['telefone'].dirty || form.controls['telefone'].touched )"
                         color="warn">close</mat-icon>
                     <mat-error
                         *ngIf="form.controls['telefone'].invalid && (form.controls['telefone'].dirty || form.controls['telefone'].touched)">
-                        insira o telefone completo.</mat-error>
+                        insira o nº telefone.</mat-error>
                     <mat-icon matSuffix
                         *ngIf="form.controls['telefone'].valid && (form.controls['telefone'].dirty || form.controls['telefone'].touched)"
                         color="primary">check</mat-icon>
                 </mat-form-field>
 
-                <mat-form-field class="tamanho_campo_medio" fxflex="50%" fxFlex.lt-sm="90">
-                   
-
- <mat-select formControlName="patenteCtrl" 
-          placeholder="patentes" #singleSelect>
-          <mat-option>
-            <ngx-mat-select-search placeholderLabel="Buscar..." [formControl]="PatenteFiltroCtrl"
-              noEntriesFoundLabel="nenhuma patente encontrado"></ngx-mat-select-search>
-          </mat-option>
-          <mat-option *ngFor="let patente of patentesFiltradas | async" [value]="patente.id">{{patente.designacao}}</mat-option>
-        </mat-select>
-
+                <mat-form-field fxFlex>
+                  <input matInput placeholder="E-mail" formControlName="email" [(ngModel)]="usuario.email" autocomplete="false" pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" required >
+                    <mat-icon matSuffix
+                        *ngIf="form.controls['email'].invalid && (form.controls['email'].dirty || form.controls['email'].touched )"
+                        color="warn">close</mat-icon>
+                    <mat-error
+                        *ngIf="form.controls['email'].invalid && (form.controls['email'].dirty || form.controls['email'].touched)">
+                        insira um email válido.</mat-error>
+                    <mat-icon matSuffix
+                        *ngIf="form.controls['email'].valid && (form.controls['email'].dirty || form.controls['email'].touched)"
+                        color="primary">check</mat-icon>
                 </mat-form-field>
+         </div>
+         <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px"> 
           
+          <mat-form-field fxFlex>
+             <mat-label>Senha</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="senha" [(ngModel)]="usuario.senha" minlength="{{minPw}}" (input)="onPasswordInput()"> 
+   
+                 <mat-error *ngIf="senha.hasError('required')">Insira a senha.</mat-error>
+                 <mat-error *ngIf="senha.errors?.minlength" >A senha deve ter no minimo {{minPw}} digitos.</mat-error>
+            
+                <button mat-icon-button matSuffix (click)=" hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+          </mat-form-field>
 
-            <mat-form-field class="tamanho_campo_medio" fxflex="50%" fxFlex.lt-sm="90">
-                <mat-label>Senha</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'">
+          <mat-form-field fxFlex>
+           <mat-label>Confirmar Senha</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="confSenha" (input)="onPasswordInput()">
+               <mat-error *ngIf="confSenha.hasError('required')">Confirme a sua senha</mat-error>
+               <mat-error *ngIf="confSenha.invalid && !confSenha.hasError('required')">Senhas não são iguais.</mat-error>
+
                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                     [attr.aria-pressed]="hide">
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
             </mat-form-field>
+          <mat-form-field fxFlex>
+           <mat-select formControlName="patenteCtrl" placeholder="patentes" [(ngModel)]="usuario.patente" #singleSelect>
+            <mat-option>
+             <ngx-mat-select-search placeholderLabel="Buscar..." [formControl]="PatenteFiltroCtrl"
+              noEntriesFoundLabel="nenhuma patente encontrado"></ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let patente of patentesFiltradas | async" [value]="patente.id">{{patente.designacao}}</mat-option>
+           </mat-select>
+          </mat-form-field>   
 
-            <mat-form-field class="tamanho_campo_medio" fxflex="50%" fxFlex.lt-sm="90">
-                <mat-label>Confirmar Senha</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'">
-                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                    [attr.aria-pressed]="hide">
-                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-            </mat-form-field>
+         </div>   
 
-             <mat-form-field fxFlex>
-      <mat-select formControlName="esquadraCtrl" 
-      placeholder="esquadras" #singleSelect>
+          <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px"> 
+
+<mat-form-field fxFlex>
+      <mat-select formControlName="esquadraCtrl" [(ngModel)]="usuario.esquadra"  placeholder="esquadras" #singleSelect>
         <mat-option>
             <ngx-mat-select-search [formControl]="EsquadraFiltroCtrl" placeholderLabel="Buscar..."
               noEntriesFoundLabel="nenhuma esquadra encontrada"></ngx-mat-select-search>
@@ -98,6 +116,8 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+
+          </div>   
 
 <mat-accordion>
   
@@ -171,7 +191,7 @@
 
         </form>
         <mat-card-actions align="end">
-            <button mat-fab click="" color="primary" matTooltipPosition="above" matTooltip="salvar" ripple-effect>
+            <button mat-fab (click)="enviar()" color="primary" matTooltipPosition="above" matTooltip="salvar" ripple-effect>
                 <mat-icon>
                     check
                 </mat-icon>
@@ -183,7 +203,3 @@
             </button>
         </mat-card-actions>
     </mat-card>
-
-
-
-</div>
