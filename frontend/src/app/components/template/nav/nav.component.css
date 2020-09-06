@@ -48,4 +48,7 @@ width: 100%!important;
     width: 200px !important;
 }
 
+.mat-divider {
+    border-top-color: #fff;
+}
 

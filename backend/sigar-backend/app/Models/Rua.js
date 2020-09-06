@@ -21,7 +21,9 @@ class Rua extends Model {
  esquadras() {
    return this.hasMany('App/Models/Esquadra')
  }
- 
+ usuarios() {
+   return this.hasMany('App/Models/Usuario')
+ }
 }
 
 module.exports = Rua

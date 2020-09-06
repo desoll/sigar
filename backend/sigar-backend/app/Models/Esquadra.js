@@ -18,6 +18,9 @@ class Esquadra extends Model {
   ruas(){
     return this.belongsTo('App/Models/Rua')
  }
+  usuarios() {
+   return this.hasMany('App/Models/Usuario')
+ }
 }
 
 module.exports = Esquadra

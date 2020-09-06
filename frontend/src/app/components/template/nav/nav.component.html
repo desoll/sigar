@@ -7,6 +7,7 @@
                 </mat-icon>
                 Inicio
             </a>
+            <mat-divider></mat-divider>
             <mat-animated-icon start="keyboard_arrow_down" class="icon-1 mat-icon" end="keyboard_arrow_up" colorStart="none" colorEnd="none" [animate]="animate_utilizador"></mat-animated-icon>
             <a mat-list-item [matMenuTriggerFor]="menu"  (mouseenter) = "desabilitarUsuario()"  (click) = "toggleUsuario()" >
             
@@ -38,6 +39,7 @@
                     </mat-icon>
                 </a>
               </mat-menu>
+              <mat-divider></mat-divider>
               <mat-animated-icon start="keyboard_arrow_down" class="icon-1 mat-icon" end="keyboard_arrow_up" colorStart="none" colorEnd="none" [animate]="animate_endereco"></mat-animated-icon>
              <a mat-list-item [matMenuTriggerFor]="menuEndereco" (mouseenter) = "desabilitarEndereco()"  (click) = "toggleEndereco()" >
                 <mat-icon>
@@ -74,6 +76,7 @@
                     </mat-icon>
                 </a>
               </mat-menu>
+              <mat-divider></mat-divider>
                 <mat-animated-icon start="keyboard_arrow_down" class="icon-1 mat-icon" end="keyboard_arrow_up" colorStart="none" colorEnd="none" [animate]="animate_esquadra"></mat-animated-icon>
             
                 <a mat-list-item [matMenuTriggerFor]="menuEsquadra"  (mouseenter) = "desabilitarEsquadra()"  (click) = "toggleEsquadra()" >
@@ -96,6 +99,7 @@
                     </mat-icon>
                     </a>
             </mat-menu>
+            <mat-divider></mat-divider>
         </mat-nav-list>
         
     </mat-sidenav>

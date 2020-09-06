@@ -14,13 +14,14 @@ import { Bairro } from '../../bairro/bairro.model';
 import { MunicipioService } from '../../municipio/municipio.service';
 import { BairroService } from '../../bairro/bairro.service';
 import { uuid } from 'uuid';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Rua } from '../../rua/rua.model';
 import { RuaService } from '../../rua/rua.service';
 import { Usuario } from '../usuario.model';
+import { UsuarioService } from '../usuario.service';
 import { Esquadra } from '../../esquadra/esquadra.model';
 import { EsquadraService } from '../../esquadra/esquadra.service';
 import * as CryptoJS from 'crypto-js';
-import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-novo.usuario',
@@ -65,12 +66,13 @@ export class NovoUsuarioComponent implements OnInit {
   public esquadrasFiltradas:       ReplaySubject<Esquadra[]>       = new ReplaySubject<Esquadra[]>(1);
 
   @ViewChild("singleSelect", { static: true }) singleSelect: MatSelect;
+  @ViewChild('attachments') attachment: any;
   @Output() onSelectionChange: EventEmitter<any> = new EventEmitter<any>();
 
   protected _onDestroy = new Subject<void>();
   private _changeSubscription: Subscription = null;
   minPw = 8;
-  constructor(private provinciaService: ProvinciaService,  private municipioService: MunicipioService, private bairroService: BairroService, private ruaService: RuaService, private formBuilder: FormBuilder, private patenteService: PatenteService, private esquadraService: EsquadraService) { }
+  constructor(private provinciaService: ProvinciaService,  private municipioService: MunicipioService, private bairroService: BairroService, private ruaService: RuaService, private usuarioService: UsuarioService,private formBuilder: FormBuilder, private router: Router,private patenteService: PatenteService, private esquadraService: EsquadraService) { }
  
   usuario: Usuario = {
     id: '',
@@ -104,28 +106,30 @@ export class NovoUsuarioComponent implements OnInit {
    
   validar(){
     this.form = this.formBuilder.group({
-       nome: ['',Validators.required],
-       telefone: ['',Validators.required],
-       email: ['',Validators.required],
-       senha: ['', Validators.required],
-       foto: ['',Validators.required],
-       confSenha:['',Validators.required],
-       patenteCtrl: ['', Validators.required],
+       nome:      ['',Validators.required],
+       telefone:  ['',Validators.required],
+       email:     ['',Validators.required],
+       senha:     ['',Validators.required],
+       foto:      ['',Validators.required],
+       confSenha: ['',Validators.required],
+       patenteCtrl:   ['', Validators.required],
        provinciaCtrl: ['', Validators.required],
        municipioCtrl: ['', Validators.required],
-       bairroCtrl: ['', Validators.required],
-       ruaCtrl: ['', Validators.required],
-       esquadraCtrl: ['', Validators.required],
+       bairroCtrl:    ['', Validators.required],
+       ruaCtrl:       ['', Validators.required],
+       esquadraCtrl:   ['', Validators.required],
     }, {validator: this.passwordMatchValidator});
   }
     removeImage() {
       this.cardImageBase64 = null;
       this.isImageSaved = false;
+      this.attachment.nativeElement.value = '';
     }
     fileChangeEvent(fileInput: any) {
 
       
       this.imageError = null;
+      console.log('Ficehiros: ', fileInput.target.files)
       if (fileInput.target.files && fileInput.target.files[0]) {
           // Size Filter Bytes
           const max_size = 20971520;
@@ -135,13 +139,13 @@ export class NovoUsuarioComponent implements OnInit {
 
           if (fileInput.target.files[0].size > max_size) {
               this.imageError =
-                  'Maximum size allowed is ' + max_size / 1000 + 'Mb';
+                  'Tamanho maximo permitido é de ' + max_size / 1000 + 'Mb';
 
               return false;
           }
 
           if (!_.includes(allowed_types, fileInput.target.files[0].type)) {
-              this.imageError = 'Only Images are allowed ( JPG | PNG )';
+              this.imageError = 'Apenas imagens ( JPG | PNG )';
               return false;
           }
           const reader = new FileReader();
@@ -152,12 +156,9 @@ export class NovoUsuarioComponent implements OnInit {
                   const img_height = rs.currentTarget['height'];
                   const img_width = rs.currentTarget['width'];
 
-                  console.log(img_height, img_width);
-
-
                   if (img_height > max_height && img_width > max_width) {
                       this.imageError =
-                          'Maximum dimentions allowed ' +
+                          'Deminsão maxima permitida é ' +
                           max_height +
                           '*' +
                           max_width +
@@ -502,8 +503,30 @@ export class NovoUsuarioComponent implements OnInit {
   }
 
   enviar(){
-   var pass =  CryptoJS.AES.encrypt(this.usuario.senha.trim(), 'd3501').toString();
-   this.usuario.senha = this.usuario.senha ?  pass: ''; 
+
+     var mensagem = '';
+     console.log('Validacao: ', this.form)
+    if (this.form.valid == true) 
+    {
+      var pass =  CryptoJS.AES.encrypt(this.usuario.senha.trim(), 'd3501').toString();
+      this.usuario.senha = this.usuario.senha ?  pass: ''; 
+      this.usuario.foto = this.cardImageBase64;
+      this.usuarioService.novo(this.usuario).subscribe(resp => {
+        mensagem = resp['message'].sucess;
+        this.usuarioService.mostrarMensagem(mensagem);
+        this.router.navigate(['/'])
+      },
+      (err) => {
+        console.log('Erro:',err)
+         mensagem = err.error.message.error;
+         this.usuarioService.mostrarMensagem(mensagem);
+      });
+    }
+    else{
+      this.usuarioService.mostrarMensagem("preencha os campos obrigatório!")
+    }
+
+
     console.log('Dados: ', this.usuario)
   }
 

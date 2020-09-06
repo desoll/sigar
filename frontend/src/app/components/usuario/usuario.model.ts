@@ -13,6 +13,6 @@ export interface Usuario {
    rua: Rua[],
    esquadra: Esquadra[],
    patente: Patente[],
-   foto: File 
+   foto: string 
 }
 

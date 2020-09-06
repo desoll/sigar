@@ -15,7 +15,9 @@ class Patente extends Model {
   static get incrementing(){
     return false;
   }
-
+ usuarios() {
+   return this.hasMany('App/Models/Usuario')
+ }
 }
 
 module.exports = Patente

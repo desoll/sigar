@@ -28,6 +28,8 @@ Route.get('esquadra/editarDados','EsquadraController.editarDados');
 Route.patch('esquadra/actualizar','EsquadraController.actualizarDados');
 Route.delete('esquadra/apagar', 'EsquadraController.apagar');
 
+Route.post('usuario/novo','UsuarioController.criar');
+
 Route.group(()=>{
     Route.post('users/login','UserController.login');
     Route.post('users/add','UserController.store');
