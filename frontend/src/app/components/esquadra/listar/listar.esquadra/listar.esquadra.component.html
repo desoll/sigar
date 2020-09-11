@@ -1,10 +1,19 @@
 <div class="container mat-elevation-z4">
 
+  <div class="container-medio">
+   <div  class="ajuste">
   <mat-form-field>
-    <input matInput (keyup)="filtrarTabela($event)" placeholder="buscar..."/>
+    <input matInput (keyup)="filtrarTabela($event)" placeholder="Pesquisar..."/>
+    <mat-icon matSuffix>
+       search
+    </mat-icon>
   </mat-form-field>
+  </div>
+
+   <ngx-skeleton-loader count="5" appearance="line" animation="pulse" *ngIf="loader"></ngx-skeleton-loader>
+
   
-  <mat-table class="full-width-table" [dataSource]="dataSource" matSort aria-label="Elements">
+  <mat-table class="full-width-table" [dataSource]="dataSource" matSort aria-label="Elements" *ngIf="!loader">
     <!-- Id Provincia Column [dataSource]="dataSource['data']"-->
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef [hidden]="true" mat-sort-header>Id Provincia</mat-header-cell>
@@ -79,8 +88,9 @@
     </mat-header-row>
     <mat-row *matRowDef="let row; columns: getDisplayedColumns()"></mat-row>
   </mat-table>
+ <div *ngIf="!loader && contar < 1" align="center">Nenhum registo encontrado!!!</div>
 
-  <mat-paginator #paginator [length]="dataSource?.data.length" [pageIndex]="0" [pageSize]="5"
+  <mat-paginator *ngIf="!loader && contar > 0 " #paginator [length]="dataSource?.data.length" [pageIndex]="0" [pageSize]="5"
     [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
 
 </div>

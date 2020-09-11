@@ -1,13 +1,29 @@
 .container{
   background-color: white;
+  height: 5.6in;
+  max-height: auto;
+ 
 }
-
+.ajuste{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.container-medio {
+  width: 85%;
+  margin-right: auto;
+  margin-left: auto;
+  
+}
 
 .full-width-table {
   width: 100%;
 }
 
 .mat-form-field {
+  
+ padding-top: 1in;
   font-size: 14px;
   width: 30%;
 }

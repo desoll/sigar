@@ -15,7 +15,8 @@ import { Router } from '@angular/router';
 
 export class ListarEnderecoComponent implements OnInit {
   items;
-
+  loader=true;
+  contar = 0;
   columnDefinitions = [
     { def: 'provincia_id', label: 'Id Provincia', hide: true},
     { def: 'municipio_id', label: 'Id municipio', hide: true},
@@ -45,17 +46,22 @@ export class ListarEnderecoComponent implements OnInit {
 
   listar(){
     this.enderecoService.listarEndereco().subscribe(resp => {
+      setTimeout(() => {
+      this.loader = false;
       this.items = resp
       this.dataSource = new MatTableDataSource(this.items['data'])
-
        this.dataSource.paginator = this.paginator;
-       this.dataSource.sort      = this.sort;
+       this.dataSource.sort      = this.sort;  
+       this.contar = this.dataSource.filteredData.length;
+      }, 3000);
     });
   }
 
   filtrarTabela(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.contar = this.dataSource.filteredData.length;
+ //   console.log('Prop: ', this.dataSource.filteredData.length )
   }
 
   apagar(rua_id)  {

@@ -19,6 +19,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatDialogModule } from '@angular/material/dialog'
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar'
+
 //Imports para a criar formularios
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -110,7 +114,10 @@ import { TelefoneMaskDirective } from './directives/telefone-mask.directive';
     MatPaginatorModule,
     MatSortModule,
     MatDialogModule,
-    MatExpansionModule
+    MatExpansionModule,
+    NgxSkeletonLoaderModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule
 
   ],
   providers: [

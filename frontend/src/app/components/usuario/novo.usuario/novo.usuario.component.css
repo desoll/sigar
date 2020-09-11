@@ -30,6 +30,18 @@ button{
 .img-responsive{
   width:  178px !important;
   height: 178px !important;
+/**/
+    float: left;
+    width: 50px;
+    height: 50px;
+    background-color: white; 
+    border: solid 2px rgb(212, 212, 212);
+    border-radius: 50%;  
+    background: url('/assets/silohuette.svg');
+    background-size: 50px 50px; 
+    margin-left: 27px;
+/**/
+    overflow: hidden;
 }
 
 .image-wrap {

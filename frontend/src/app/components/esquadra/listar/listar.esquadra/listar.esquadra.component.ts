@@ -15,6 +15,8 @@ import { ApagarComponent } from 'src/app/views/dialog/apagar/apagar.component';
 export class ListarEsquadraComponent implements OnInit {
 
   items;
+  loader=true;
+  contar =0;
 
   columnDefinitions = [
     { def: 'id',           label: 'Id Esquadra',  hide: true},
@@ -47,10 +49,15 @@ export class ListarEsquadraComponent implements OnInit {
 
   listar(){
     this.esquadraService.listar().subscribe(resp => {
-    this.items = resp
-    this.dataSource = new MatTableDataSource(this.items['data'])
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort      = this.sort;
+      setTimeout(() => {
+        this.loader = false;
+        this.items = resp
+        this.dataSource = new MatTableDataSource(this.items['data'])
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort      = this.sort;
+        this.contar = this.dataSource.filteredData.length;
+
+      }, 3000);
     
     });
   }
@@ -58,6 +65,7 @@ export class ListarEsquadraComponent implements OnInit {
   filtrarTabela(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.contar = this.dataSource.filteredData.length;
   }
 
   apagar(id)  {
