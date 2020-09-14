@@ -1,0 +1,81 @@
+
+<!--<img mat-card-image [src]='imagem' class="img-responsive"/>-->
+<!--<mat-list>
+  <mat-list-item *ngFor="let position of listaUsuarios">
+    <h3 mat-line> {{ position.nome }} </h3>
+    <p mat-line>
+      <span> Line 1 </span>
+    </p>
+    <div> $2.00 </div>
+    <button mat-icon-button >
+      <mat-icon class="mat-24">delete</mat-icon>
+    </button>
+  </mat-list-item>
+</mat-list>
+<div class="container mat-elevation-z4">
+<div class="mat-padding" layout="row" layout-fill layout-wrap layout-align="start start">
+<mat-nav-list>
+    <mat-list-item *ngFor="let usuario of listaUsuarios" draggable="true" flex-xs="100" flex-sm="50" flex-md="33"
+                  flex-gt-md="25" class="mat-3-line" ng-click="alert('hi')">
+       <!-- <img src="../../_resources/images/boy_real.jpg" class="md-avatar"/>
+        <img mat-card-image [src]='imagem' class="img-responsive" class="mat-avatar"/>-->
+    <!--  <div class="mat-list-item">
+             <h3> {{usuario.nome}} </h3>
+            <h4> {{usuario.telefone}} </h4>
+        </div>
+
+        <mat-divider mat-inset></mat-divider>
+
+    </mat-list-item>
+</mat-nav-list>
+</div>
+</div>-->
+
+<div class="container">
+    <mat-card class="">
+        <mat-card-header>
+            <mat-form-field class="full-width">
+                <input matInput placeholder="Filter">
+            </mat-form-field>
+        </mat-card-header>
+
+        <mat-card-content class="grid">
+            <mat-card class="card-two" *ngFor="let user of listaUsuarios">
+                <mat-card-header>
+                    <div mat-card-avatar>
+                     <img mat-card-md-image  [src]='imagem' class="img-responsive"/>
+                     </div>
+                    <mat-card-title class="cls_nome">{{user.nome}}  
+                      <mat-icon mat-list-icon  class="verde icon" matTooltip="estado {{user.estado}}" *ngIf="user.estado.toLowerCase() == 'activo'">fiber_manual_record</mat-icon>
+                      <mat-icon color="warn" matTooltip="estado {{user.estado}}" *ngIf="user.estado.toLowerCase() != 'activo'">fiber_manual_record</mat-icon> </mat-card-title>
+                    <mat-card-subtitle class="cls_nome">{{user.patente}}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content class="conteudo">
+                <mat-divider ></mat-divider>
+                    <span mat-line>
+                        <b>Telefone:</b> {{user.telefone}}
+                        <b>Email:</b>{{user.email}}
+                    </span>
+                    <br />
+                    <span mat-line>
+                     <b>Esquadra:</b> {{user.esquadra}}
+                     <b>Rua:</b> {{user.rua}}
+                    </span>
+                </mat-card-content>
+                <mat-card-actions align="end">
+                   <!-- <button mat-button>LIKE</button>
+                    <button mat-button>SHARE</button>-->
+                     <a mat-mini-fab color="primary" class="editar button" matTooltipPosition="above"
+           ripple-effect routerLinkActive="router-link-active">
+          <i class="material-icons">edit</i>
+        </a>
+        <button mat-mini-fab class="apagar button" color="warn" matTooltipPosition="above" ripple-effect>
+          <i class="material-icons ">delete</i>
+        </button>
+                </mat-card-actions>
+            </mat-card>
+        </mat-card-content>
+
+    </mat-card>
+
+</div>

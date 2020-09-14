@@ -28,4 +28,9 @@ export class UsuarioService {
     let url = this.baseUrl +'/novo';
     return this.http.post<Usuario>(url, usuario)
   }
+
+  listarTodos():Observable<Object>{
+    return this.http.get<Object>(this.baseUrl);
+  }
+
 }

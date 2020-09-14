@@ -1,72 +1,170 @@
-
-<mat-toolbar class="expanded-toolbar mat-elevation-z4">
-    <a>
-        <i>
-            <img class="logo" src="./assets/img/logo.png" width="60" height="60" alt="logo" />
-        </i>
-    </a>
-    <div class="header">
-        <span class="title-group">
-            <a [routerLink]="['/']" routerLinkActive="router-link-active" >
-                <i class="material-icons">
-                    home
-                </i>
-                Inicio
-            </a>
-        </span>
-        <span class="title-group">
-            <a [routerLink]="['/']" routerLinkActive="router-link-active">
-                <i class="material-icons">
-                    article
-                </i>
-                Ocorrências
-            </a>
-        </span>
-        <span class="title-group">
-            <a [routerLink]="['/']" routerLinkActive="router-link-active">
-                <i class="material-icons">
-                    home
-                </i>
-                Sobre
-            </a>
-        </span>
-    </div>
-    <div fxLayout="row" fxShow="false" fxShow.gt-sm>
-        <span>
-            <span class="title-group" matBadge="4"  matBadgeOverlap="false" matBadgeColor="warn">
-            <mat-icon color="primary">notifications</mat-icon>
-            
-          </span>
-        </span>
-        <button mat-button routerLink="/login" *ngIf="!isAuthenticated">
-            <mat-icon>login</mat-icon>
-            Login
-        </button>
-        <button mat-button *ngIf="isAuthenticated" (click)="logout()">
-            <mat-icon>power_settings_new</mat-icon>
-            Logout
-        </button>
-    </div>
-    <button mat-button [mat-menu-trigger-for]="menu" fxHide="false" fxHide.gt-sm>
-        <mat-icon>menu</mat-icon>
-    </button>
-</mat-toolbar>
-
-<mat-menu x-position="before" #menu="matMenu">
-    <button mat-menu-item routerLink="/">
-        <mat-icon>home</mat-icon>
-        Home
-    </button>
-    <button mat-menu-item routerLink="/game">
-        <mat-icon>gamepad</mat-icon>
-        Play
-    </button>
-    <button mat-menu-item routerLink="/login" *ngIf="!isAuthenticated">
-        <mat-icon>power_settings_new</mat-icon>
-        Login
-    </button>
-    <button mat-menu-item *ngIf="isAuthenticated" (click)="logout()">
-        <mat-icon>exit_to_app</mat-icon>
-        Logout
-    </button>
+<div class="navbar-container" [class.example-is-mobile]="mobileQuery.matches">
+<!-- Top navbar -->
+<mat-toolbar class="navbar" color="primary">
+<button mat-icon-button (click)="snav.toggle()">
+<mat-icon>menu</mat-icon>
+</button>
+<a class="navbar-brand" [routerLink]="['/']" matTooltip="Home">
+<h1>
+angular-material-template
+</h1>
+</a>
+<span class="navbar-spacer"></span>
+<button mat-icon-button [matMenuTriggerFor]="notificationMenu">
+<mat-icon matBadge="2" matBadgeColor="accent">notifications</mat-icon>
+</button>
+<mat-menu #notificationMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
+<a mat-menu-item>
+<span>You have new tasks</span>
+</a>
+<a mat-menu-item>
+<span>You have a new message</span>
+</a>
 </mat-menu>
+<button mat-button [matMenuTriggerFor]="userMenu">
+<mat-icon>person</mat-icon>
+<span fxShow fxHide.xs>
+{{Usuario}}
+</span>
+</button>
+<mat-menu #userMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
+<a mat-menu-item [routerLink]="['/account/profile']">
+<mat-icon>person</mat-icon>
+<span>Account</span>
+</a>
+<a mat-menu-item [routerLink]="['/auth/login']">
+<mat-icon>exit_to_app</mat-icon>
+<span>Log out</span>
+</a>
+</mat-menu>
+</mat-toolbar>
+<mat-progress-bar *ngIf='carregar' style="margin:0 auto" color="black" mode='indeterminate' diameter="200" strokeWidth="5" value="60"></mat-progress-bar>
+
+
+
+<mat-sidenav-container class="navbar-sidenav-container">
+<!-- Side nav -->
+<mat-sidenav #snav [opened]="!mobileQuery.matches" [mode]="mobileQuery.matches ? 'over' : 'side'"
+[fixedInViewport]="mobileQuery.matches" fixedTopGap="56" class="sidenav">
+<mat-nav-list>
+ <a mat-list-item routerLink="/" routerLinkActive="active">
+     <mat-icon mat-list-icon color="primary">
+         home
+     </mat-icon>
+      <p mat-line> Home </p>
+  </a>
+    <mat-divider></mat-divider>
+            <a mat-list-item [matMenuTriggerFor]="menu"  (mouseenter) = "desabilitarUsuario()"  (click) = "toggleUsuario()" >
+            
+                <mat-icon mat-list-icon color="primary">
+                    people_alt
+                </mat-icon>
+                 <p mat-line>   Utilizadores </p>
+                <mat-animated-icon start="keyboard_arrow_down" class="icon-1 mat-icon" end="keyboard_arrow_up" colorStart="none" colorEnd="none" [animate]="animate_utilizador"></mat-animated-icon>
+          
+            </a>
+            <mat-menu #menu="matMenu">
+                <a mat-menu-item  routerLink="/usuario/novo">
+                    Novo Usuario
+                    <mat-icon  mat-list-icon color="primary" class="icon">
+                        person_add
+                    </mat-icon>
+                    </a>
+             
+                <a mat-menu-item  routerLink="/patente/nova">
+                  Nova Patente
+                  <mat-icon  mat-list-icon color="primary" class="icon">
+                   add_circle
+                  </mat-icon>
+                </a>
+                <a mat-menu-item routerLink="/usuarios">
+                    Listar
+                    <mat-icon  mat-list-icon color="primary" class="icon"> 
+                        list
+                    </mat-icon>
+                </a>
+              </mat-menu>
+            <mat-divider></mat-divider>
+             <a mat-list-item [matMenuTriggerFor]="menuEndereco" (mouseenter) = "desabilitarEndereco()"  (click) = "toggleEndereco()" >
+                <mat-icon mat-list-icon color="primary"> 
+                    explore
+                </mat-icon>
+               <p mat-line>  Endereço </p>  
+               <mat-animated-icon start="keyboard_arrow_down" class="icon-1 mat-icon" end="keyboard_arrow_up" colorStart="none" colorEnd="none" [animate]="animate_endereco"></mat-animated-icon>
+            </a> 
+            
+              <mat-menu #menuEndereco="matMenu">
+                <a mat-menu-item routerLink="/municipio/novo">
+                    Municipío
+                    <mat-icon  mat-list-icon color="primary" class="icon"> 
+                        location_on
+                    </mat-icon>
+                </a>
+                <a mat-menu-item [routerLink]="['/bairro/novo']" routerLinkActive="router-link-active" >
+                    Bairro
+                    <mat-icon color="primary" class="icon">
+                        center_focus_strong
+                    </mat-icon>
+                </a>
+                <a mat-menu-item routerLink="/rua/nova">
+                    Rua
+                    <mat-icon color="primary" class="icon"> 
+                        my_location
+                    </mat-icon>
+                </a>
+
+                <a mat-menu-item routerLink="/enderecos">
+                    Listar Endereços
+                    <mat-icon color="primary" class="icon"> 
+                        format_list_bulleted
+                    </mat-icon>
+                </a>
+              </mat-menu>
+              <mat-divider></mat-divider>
+            
+                <a mat-list-item [matMenuTriggerFor]="menuEsquadra"  (mouseenter) = "desabilitarEsquadra()"  (click) = "toggleEsquadra()" >
+                <mat-icon mat-list-icon color="primary">
+                    local_police
+                </mat-icon>
+                <p mat-line>    Esquadra </p>    
+               <mat-animated-icon start="keyboard_arrow_down" class="icon-1 mat-icon" end="keyboard_arrow_up" colorStart="none" colorEnd="none" [animate]="animate_esquadra"></mat-animated-icon>
+            
+            </a>
+            <mat-menu #menuEsquadra="matMenu">
+               <a mat-menu-item  routerLink="/esquadra/nova">
+                    Nova Esquadra
+                    <mat-icon color="primary" class="icon">
+                        add_circle
+                    </mat-icon>
+                    </a>
+                    <a mat-menu-item routerLink="/esquadra">
+                     Listar
+                    <mat-icon color="primary" class="icon"> 
+                        list
+                    </mat-icon>
+                    </a>
+            </mat-menu>
+            <mat-divider></mat-divider>
+
+<a mat-list-item href="https://material.angular.io/components/categories" target="_blank">
+<mat-icon mat-list-icon>
+link
+</mat-icon>
+<p mat-line> Material Components </p>
+</a>
+<a id="push-bottom" mat-list-item [routerLink]="['/about']" routerLinkActive="active">
+<mat-icon mat-list-icon>
+info_outline
+</mat-icon>
+<p mat-line> About </p>
+</a>
+</mat-nav-list>
+</mat-sidenav>
+<!-- Main content -->
+<mat-sidenav-content class="sidenav-content">
+<div class="progress-bar-container">
+</div>
+<router-outlet></router-outlet>
+</mat-sidenav-content>
+</mat-sidenav-container>
+</div>

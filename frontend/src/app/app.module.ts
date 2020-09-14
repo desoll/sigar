@@ -62,6 +62,7 @@ import { ListarEsquadraComponent } from './components/esquadra/listar/listar.esq
 import { from } from 'rxjs';
 import { VarDirective } from './directives/var.directive';
 import { TelefoneMaskDirective } from './directives/telefone-mask.directive';
+import { ListarUsuarioComponent } from './components/usuario/listar.usuario/listar.usuario.component';
  
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { TelefoneMaskDirective } from './directives/telefone-mask.directive';
     ListarEsquadraComponent,
     MatAnimatedIconComponent,
     VarDirective,
-    TelefoneMaskDirective
+    TelefoneMaskDirective,
+    ListarUsuarioComponent
   ],
   imports: [
   BrowserModule,

@@ -129,7 +129,6 @@ export class NovoUsuarioComponent implements OnInit {
 
       
       this.imageError = null;
-      console.log('Ficehiros: ', fileInput.target.files)
       if (fileInput.target.files && fileInput.target.files[0]) {
           // Size Filter Bytes
           const max_size = 20971520;

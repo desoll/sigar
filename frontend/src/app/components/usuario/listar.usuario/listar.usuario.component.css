@@ -1,0 +1,77 @@
+.card {
+  padding-left: 105px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-gap: 20px;
+  /*padding-left: 100px;*/
+  align-items: stretch;
+}
+
+.card-two {
+  max-width: 400px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.img-responsive {
+  border-radius: 50%;
+  background-size: cover;
+  /*object-fit: cover;
+  width: 1in !important; 
+  height:1in !important;
+  padding: 14%;*/
+}
+.cls_nome {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-left: .6in;
+}
+
+.conteudo{
+ /* margin-left: 1.2in;*/
+  margin-top: 16%;
+  font-size: 11px;
+
+
+}
+
+.divisao {
+  width: 67% !important;
+  margin-left: 1.3in;
+}
+.verde{
+  color: #52CC7A;
+}
+b{
+ padding-left: 2%;
+}
+
+.icon{
+ font-size: medium;
+ padding-top: 0.1rem;
+}
+
+.button{
+  justify-content: flex-end;
+  margin: 0.3em;
+ }
+ mat-cell-bottom{
+  display:flex !important;
+  justify-content:flex-end!important;
+
+}
+::ng-deep .mat-cell-bottom{
+  display:flex !important;
+  justify-content:flex-end!important;
+}

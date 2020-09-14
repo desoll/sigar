@@ -6,18 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styles: []
 })
 export class AppComponent implements OnInit {
-  title = 'frontend';
-  carregar = true;
+  title = 'sigar';
  
     ngOnInit(): void {
-       this.Processar()
       
     }
 
-   Processar() {
-     var rand = Math.round(Math.random() * (3000 - 500)) + 500;
-   setTimeout(() => {
-     this.carregar = false;
-   }, rand);
- }
+   
 }

@@ -48,7 +48,7 @@ class EsquadraController {
     }
     catch (err) {
       return response
-        .send({ message: { sucess: true }, error: `Falha ao listar dados: ${err}`, data: null });
+        .send({ message: { sucess: false }, error: `Falha ao listar dados: ${err}`, data: null });
     }
   }
 

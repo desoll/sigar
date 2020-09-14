@@ -29,6 +29,7 @@ Route.patch('esquadra/actualizar','EsquadraController.actualizarDados');
 Route.delete('esquadra/apagar', 'EsquadraController.apagar');
 
 Route.post('usuario/novo','UsuarioController.criar');
+Route.get('usuario','UsuarioController.listarTodos');
 
 Route.group(()=>{
     Route.post('users/login','UserController.login');

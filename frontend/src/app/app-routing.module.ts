@@ -13,6 +13,7 @@ import { ListarEnderecoComponent } from './components/rua/listar-endereco/listar
 import { LoginComponent } from './components/usuario/login/login.component';
 import { NovaEsquadraComponent } from './components/esquadra/nova.esquadra/nova.esquadra.component';
 import { ListarEsquadraComponent } from './components/esquadra/listar/listar.esquadra/listar.esquadra.component';
+import { ListarUsuarioComponent } from './components/usuario/listar.usuario/listar.usuario.component';
 
 
 const routes: Routes = [{
@@ -30,6 +31,10 @@ const routes: Routes = [{
 {
   path:"usuario/novo",
   component: NovoUsuarioComponent
+},
+{
+  path:"usuarios",
+  component:ListarUsuarioComponent
 },
 {
   path:"municipio/novo",
