@@ -25,7 +25,7 @@
     "@types/crypto-js": "^3.1.47",
     "audit": "0.0.6",
     "crypto-js": "^4.0.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "ng-circle-progress": "^1.5.1",
     "ngx-mat-select-search": "^2.2.0",
     "ngx-skeleton-loader": "^2.4.4",
